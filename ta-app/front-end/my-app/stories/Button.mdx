@@ -1,0 +1,25 @@
+import { Meta, Title, Description, Story, Controls } from '@storybook/addon-docs/blocks';
+import { Button } from "../components/Button/Button.jsx";
+import * as ButtonStories from "./Button.stories.js";
+
+<Meta of={ButtonStories} />
+
+<Title />
+<Description />
+<Story of={ButtonStories.Primary} />
+<Story of={ButtonStories.Secondary} />
+<Story of={ButtonStories.Tertiary} />
+
+# Button Component
+
+<Controls />
+
+The `Button` component is used to trigger an action or event.
+
+## Usage
+
+```jsx
+<Button label="Click me!" />
+```
+
+<Button label="Click me!" />
