@@ -1,0 +1,23 @@
+/* Spacing System */
+/* https://medium.com/eightshapes-llc/space-in-design-systems-188bcbae0d62 */
+:root {
+  --spacing-tiny: 0.25rem; /* 4/16 */
+  --spacing-small: 0.5rem; /* 8/16 */
+  --spacing-base: 0.75rem; /* 12/16 */
+  --spacing-regular: 1rem; /* 16/16 */
+  --spacing-medium: 1.25rem; /* 20/16 */
+  --spacing-large: 1.5rem; /* 24/16 */
+  --spacing-xl: 2rem; /* 32/16 */
+  --spacing-2xl: 2.5rem; /* 40/16 */
+  --spacing-3xl: 3rem; /* 48/16 */
+  --spacing-4xl: 4rem; /* 64/16 */
+  --spacing-5xl: 5rem; /* 80/16 */
+  --spacing-6xl: 6rem; /* 96/16 */
+  --spacing-huge: 8rem; /* 128/16 */
+  --spacing-massive: 10rem; /* 160/16 */
+  --spacing-giant: 12rem; /* 192/16 */
+  --spacing-colossal: 14rem; /* 224/16 */
+  --spacing-monumental: 16rem; /* 256/16 */
+
+  --border-3: 3px;
+}
