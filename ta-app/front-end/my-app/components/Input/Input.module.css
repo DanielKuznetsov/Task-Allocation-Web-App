@@ -1,0 +1,130 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  cursor: pointer;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  /* width: max-content; */
+  height: 2rem;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  background-color: #f1f1f1;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.inputWrapper:hover .label {
+  border-right: 1px solid #3c92dc;
+}
+
+.inputWrapper:hover {
+  border: 1px solid #3c92dc;
+}
+
+.inputWrapper:focus .label,
+.inputWrapper:active .label,
+.inputWrapper:focus-within .label {
+  border-right: 1px solid #3c92dc;
+}
+
+.inputWrapper:focus,
+.inputWrapper:active,
+.inputWrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(60, 146, 220, 0.302);
+  border: 1px solid rgb(60, 146, 220);
+}
+
+.errorWrapper {
+  border: 1px solid #ce222e !important;
+}
+
+.inputWrapper.errorWrapper:focus,
+.inputWrapper.errorWrapper:active,
+.inputWrapper.errorWrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(206, 34, 46, 0.302);
+  border: 1px solid #ce222e;
+}
+
+.inputWrapper.errorWrapper:focus .label,
+.inputWrapper.errorWrapper:active .label,
+.inputWrapper.errorWrapper:focus-within .label {
+  color: #262626cc;
+  border-right: 1px solid #ce222e;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  color: #ce222e;
+  margin-top: 0.25rem;
+  max-width: calc(100% - 0.5rem);
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  animation: errorAppear 0.2s ease-in-out forwards;
+}
+
+.label {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-right: 1px solid rgb(224, 224, 224);
+  color: #262626cc;
+  padding: 0 0.5rem;
+  /* width: max-content; */
+  width: 6rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.role {
+  /* background-color: yellowgreen; */
+}
+
+.input {
+  background-color: #ffffff;
+  /* width: 100%; */
+  height: 100%;
+  width: 10rem;
+  padding: 0 0.65rem;
+  outline: none;
+  border: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.input::placeholder {
+  color: rgb(120, 120, 120);
+}
+
+/* For Chrome, Safari, Edge, Opera */
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+.input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@keyframes errorAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

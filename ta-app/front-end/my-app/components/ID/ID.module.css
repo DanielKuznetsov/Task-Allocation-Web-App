@@ -1,0 +1,25 @@
+.id {
+  border: 1px solid rgba(31, 35, 40, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+/* 
+.grid {
+  width: 22.5px;
+  height: 22.5px;
+} */
+
+.grid {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.robot {
+  border-radius: 50%;
+}

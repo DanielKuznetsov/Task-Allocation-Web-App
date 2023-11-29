@@ -1,0 +1,17 @@
+/* All cells' styles */
+.cell {
+  width: 22.5px;
+  height: 22.5px;
+
+  border: 1px solid black;
+}
+
+/* Default cell styles */
+.default {
+  background-color: #ffffff;
+}
+
+/* Barrier cell styles */
+.barrier {
+  background-color: #cfd8dc;
+}

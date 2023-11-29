@@ -1,0 +1,90 @@
+/* Error component styles */
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  color: #ce222e;
+  margin-top: 0.25rem;
+  max-width: calc(100% - 0.5rem);
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  animation: errorAppear 0.2s ease-in-out forwards;
+}
+
+/* NoData component styles */
+.noData {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+/* QuestionMark component styles */
+.QuestionMark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  border: 1px solid rgba(31, 35, 40, 0.15);
+  border-radius: 50%;
+  padding: 0.25rem;
+  cursor: pointer;
+  background-color: #f6f8fa;
+}
+
+.QuestionMark:hover {
+  border-color: rgba(31, 35, 40, 0.15);
+  background-color: #f3f4f6;
+}
+
+.QuestionMark:hover .context,
+.QuestionMark:focus .context,
+.QuestionMark:active .context {
+  animation: tooltip-appear 0.1s ease-out 0.4s forwards;
+}
+
+.context {
+  opacity: 0;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10rem;
+  background-color: #24292f;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  color: #ebecf0;
+  padding: 0.5rem 0.75rem;
+  pointer-events: none;
+}
+
+.context::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border: 5px solid transparent;
+  border-top-color: #24292f;
+}
+
+@keyframes tooltip-appear {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes errorAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

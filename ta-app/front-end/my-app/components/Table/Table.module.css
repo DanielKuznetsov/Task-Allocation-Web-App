@@ -1,0 +1,67 @@
+.tableContainer {
+  overflow: scroll;
+  border: 1px solid rgba(31, 35, 40, 0.15);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  /* height: 8.75rem; */
+}
+
+.table {
+  width: 100%;
+  /* overflow: scroll; */
+  /* width: max-content; */
+  /* background-color: rgba(154, 205, 50, 0.25); */
+  /* border: 1px solid rgba(31, 35, 40, 0.15); */
+  border-radius: 4px;
+  border-spacing: 0;
+  /* margin-top: 0.75rem; */
+  /* background-color: #ffffff; */
+  /* table-layout: fixed; */
+  /* border-collapse: collapse; */
+}
+
+.title {
+  margin-bottom: 0.75rem;
+}
+
+/* If max-content is used above, comment code below  */
+.table thead th:first-child,
+.table tbody td:first-child {
+  width: 4rem;
+}
+
+.table thead th,
+.table tbody td {
+  border-bottom: 1px solid rgba(31, 35, 40, 0.15);
+  padding: 0 0.65rem;
+  height: 2rem;
+}
+
+.table thead th:first-child,
+.table tbody td:first-child {
+  border-right: 1px solid rgba(31, 35, 40, 0.15);
+}
+
+.table tr {
+  transition: all 0.1s ease-in-out;
+}
+
+.table tr:hover {
+  background-color: rgb(247, 247, 247);
+}
+
+.table tbody tr:focus,
+.table tbody tr:active {
+  outline: none;
+  background-color: rgb(196, 222, 244);
+}
+
+.table th,
+.table td {
+  text-align: left;
+}
+
+.table th:first-child,
+.table td:first-child {
+  text-align: right;
+}

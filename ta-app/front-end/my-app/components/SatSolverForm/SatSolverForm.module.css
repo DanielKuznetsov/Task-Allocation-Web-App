@@ -1,0 +1,64 @@
+.wrapper {
+  /* padding: 0.75rem 1.25rem; */
+  /* background-color: #ffffff; */
+  /* box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); */
+  /* width: max-content; */
+}
+.form {
+}
+
+.inputSections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputSection label {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.buttons .buttonsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.buttons .buttonsWrapper .lastChild {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  color: #ce222e;
+  margin-top: 0.25rem;
+  max-width: calc(100% - 0.5rem);
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  animation: errorAppear 0.2s ease-in-out forwards;
+}
+
+.submit {
+  margin-top: 2rem;
+}
+
+@keyframes errorAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

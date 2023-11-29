@@ -1,0 +1,23 @@
+/* Base icon button styles */
+.iconButton {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 150ms ease-out;
+}
+
+.iconButton:hover {
+  transform: translateY(-1px);
+}
+
+/* Add Icon button styles */
+.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22.5px;
+  height: 22.5px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
