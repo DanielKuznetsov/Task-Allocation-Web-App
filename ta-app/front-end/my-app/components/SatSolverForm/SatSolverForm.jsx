@@ -1,6 +1,5 @@
 import typography from "../../design-system/typography.module.css";
 import classes from "./SatSolverForm.module.css";
-import PropTypes from "prop-types";
 import { Input } from "../Input/Input";
 import { Button } from "../Button/Button";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,8 +11,6 @@ import {
   setIsSolved,
 } from "../../features/data/dataSlice";
 import { useState } from "react";
-import WarningIcon from "../../public/icons/warning.svg";
-import Image from "next/image";
 import { Error } from "../Miscellaneous/Error";
 
 export const SatSolverForm = () => {

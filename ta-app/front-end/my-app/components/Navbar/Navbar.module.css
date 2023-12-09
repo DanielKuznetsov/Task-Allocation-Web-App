@@ -1,0 +1,23 @@
+.nav {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.container {
+  max-width: 71.25rem;
+  margin: 0 auto;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.tableContent {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
