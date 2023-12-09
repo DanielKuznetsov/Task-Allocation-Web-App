@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "../styles/globals.css";
 import "@mantine/core/styles.css";
 import store from "../app/store";
 import { Provider } from "react-redux";
