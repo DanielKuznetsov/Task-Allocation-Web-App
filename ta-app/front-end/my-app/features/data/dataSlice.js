@@ -49,7 +49,6 @@ const initialState = {
     isLoading: false,
     isSolved: false,
     isPlaying: false,
-    inputErrors: {},
     currentTimeStep: 0,
     notifications: {},
     addedTasks: [

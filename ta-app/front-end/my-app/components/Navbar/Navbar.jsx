@@ -2,7 +2,7 @@ import classes from "./Navbar.module.css";
 import Logo from "../../public/icons/logo.svg";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useDisclosure } from "@mantine/hooks";
+import { randomId, useDisclosure } from "@mantine/hooks";
 import {
   Modal,
   LoadingOverlay,
@@ -14,14 +14,18 @@ import {
   Table,
   Checkbox,
   ScrollArea,
+  FileInput,
   Popover,
   NumberInput,
   Space,
+  FileButton,
 } from "@mantine/core";
+import { useId } from "@mantine/hooks";
 import {
   addTask,
   addRobot,
   setMaxAllowedTime,
+  setIsThereFile,
   solveProblem,
   setIsSolved,
 } from "../../features/data/dataSlice";
@@ -29,12 +33,15 @@ import { useForm } from "@mantine/form";
 import { ReaderIcon, RocketIcon } from "@radix-ui/react-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export const Navbar = () => {
   // Inside your component
-  const startRoomInputRef = useRef(null);
+  // const startRoomInputRef = useRef(null);
 
-  const [opened, { open, close }] = useDisclosure(false);
+  const [opened, { open, close }] = useDisclosure(true);
+  const [file, setFile] = useState(null);
+  const [fileData, setFileData] = useState(null);
 
   const [visible, { toggle }] = useDisclosure(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -146,6 +153,61 @@ export const Navbar = () => {
       </Table.Tr>
     );
 
+  useEffect(() => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target.result;
+
+        JSON.parse(content).tasks.forEach((task) => {
+          dispatch(
+            addTask({
+              id: task.task_ID,
+              startRoom: task.startRoom,
+              finalRoom: task.endRoom,
+            })
+          );
+        });
+
+        JSON.parse(content).robots.forEach((robot) => {
+          dispatch(
+            addRobot({
+              id: robot.robot_ID,
+              startRoom: robot.startRoom,
+            })
+          );
+        });
+
+        const fetchMaxTime = async () => {
+          try {
+            const validateResponse = await fetch(
+              "https://task-allocation.up.railway.app/validate",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(JSON.parse(content)),
+              }
+            );
+
+            if (!validateResponse.ok) {
+              throw new Error("Network response was not ok.");
+            }
+
+            const maxTimeResponse = await validateResponse.json();
+
+            console.log("maxTimeResponse", maxTimeResponse);
+            dispatch(setMaxAllowedTime(maxTimeResponse));
+          } catch (error) {
+            console.error("Error fetching max time:", error);
+          }
+        };
+
+        fetchMaxTime();
+      };
+      reader.readAsText(file);
+    }
+  }, [file]);
+
   function addTaskOnClick(values) {
     if (taskForm.validate()) {
       dispatch(addTask({ ...values, id: taskID }));
@@ -176,8 +238,10 @@ export const Navbar = () => {
     }
   }
 
-  const solveClicked = async (e) => {
+  const solveClicked = async () => {
+    // toggle();
     setIsLoading(true);
+    toggle();
 
     // Log state for debugging
     console.log("Current state:", state);
@@ -185,22 +249,22 @@ export const Navbar = () => {
     try {
       const payload = {
         tasks: Object.values(state.frontend.addedTasks).map((task) => ({
-          startRoom: task.startRoom.toString(),
-          endRoom: task.endRoom.toString(),
-          task_ID: task.id.toString(),
+          startRoom: task.startRoom,
+          endRoom: task.finalRoom,
+          task_ID: task.id,
         })),
         robots: Object.values(state.frontend.addedRobots).map((robot) => ({
-          startRoom: robot.startRoom.toString(),
-          robot_ID: robot.id.toString(),
+          startRoom: robot.startRoom,
+          robot_ID: robot.id,
         })),
-        max_time: state.frontend.maxAllowedTime, 
+        max_time: state.frontend.maxAllowedTime,
       };
 
       // Log payload for debugging
       console.log("Sending payload:", payload);
 
       const response = await fetch(
-        "https://bscqvnlvr7aoe5qj5iscskunza0plllh.lambda-url.us-east-1.on.aws/solve",
+        "https://task-allocation.up.railway.app/solve",
         {
           method: "POST",
           headers: {
@@ -218,6 +282,9 @@ export const Navbar = () => {
       dispatch(solveProblem(data));
       dispatch(setIsSolved(true));
       console.log("Response data:", data);
+      toggle();
+
+      console.log("visiblity", visible);
     } catch (error) {
       console.error("Fetch operation error:", error);
     } finally {
@@ -272,9 +339,9 @@ export const Navbar = () => {
 
           {/* Table with tasks */}
           <Tabs.Panel value="tasks" pt="xs">
-            <Box pos="relative" style={{ marginBottom: "2rem" }}>
+            <Box pos="relative" style={{ marginBottom: "1.25rem" }}>
               <LoadingOverlay
-                visible={visible}
+                visible={isLoading}
                 zIndex={1000}
                 overlayProps={{ radius: "sm", blur: 2 }}
               />
@@ -282,7 +349,7 @@ export const Navbar = () => {
                 <Text size="xl">Tasks</Text>
 
                 {/* Add task Form */}
-                <div>
+                {/* <div>
                   <Popover
                     width={250}
                     trapFocus
@@ -328,7 +395,7 @@ export const Navbar = () => {
                       </form>
                     </Popover.Dropdown>
                   </Popover>
-                </div>
+                </div> */}
 
                 {/* Scrollable table of tasks */}
                 <ScrollArea h={200} type="never">
@@ -341,7 +408,7 @@ export const Navbar = () => {
                     <Table.Thead>
                       <Table.Tr>
                         <Table.Th style={{ width: "50px" }} />
-                        <Table.Th style={{ width: "50px" }} >ID</Table.Th>
+                        <Table.Th style={{ width: "50px" }}>ID</Table.Th>
                         <Table.Th>Starting position</Table.Th>
                         <Table.Th>Final position</Table.Th>
                       </Table.Tr>
@@ -353,15 +420,30 @@ export const Navbar = () => {
             </Box>
 
             <Group position="center">
-              <Button disabled={isLoading} fullWidth onClick={toggle}>
-                Solve Problem
-              </Button>
+              <div className={classes.actionButtons}>
+                <FileInput
+                  disabled={isLoading}
+                  value={file}
+                  onChange={setFile}
+                  required
+                  accept="application/json"
+                  label="Upload data"
+                  placeholder="Add tasks and robots"
+                />
+
+                <Button
+                  disabled={isLoading}
+                  onClick={file && !isLoading ? solveClicked : undefined}
+                >
+                  Solve Problem
+                </Button>
+              </div>
             </Group>
           </Tabs.Panel>
 
           {/* Table with robots */}
           <Tabs.Panel value="robots" pt="xs">
-            <Box pos="relative" style={{ marginBottom: "2rem" }}>
+            <Box pos="relative" style={{ marginBottom: "1.25rem" }}>
               <LoadingOverlay
                 visible={visible}
                 zIndex={1000}
@@ -371,7 +453,7 @@ export const Navbar = () => {
                 <Text size="xl">Robots</Text>
 
                 {/* Add task Form */}
-                <div>
+                {/* <div>
                   <Popover
                     width={250}
                     trapFocus
@@ -408,7 +490,7 @@ export const Navbar = () => {
                       </form>
                     </Popover.Dropdown>
                   </Popover>
-                </div>
+                </div> */}
 
                 {/* Scrollable table of tasks */}
                 <ScrollArea h={200} type="never">
@@ -417,12 +499,11 @@ export const Navbar = () => {
                     highlightOnHover
                     withColumnBorders
                     withTableBorder
-                    
                   >
                     <Table.Thead>
                       <Table.Tr>
                         <Table.Th style={{ width: "50px" }} />
-                        <Table.Th style={{ width: "50px" }} >ID</Table.Th>
+                        <Table.Th style={{ width: "50px" }}>ID</Table.Th>
                         <Table.Th>Starting position</Table.Th>
                       </Table.Tr>
                     </Table.Thead>
