@@ -1,7 +1,7 @@
 import { Table, ScrollArea, Checkbox } from "@mantine/core";
 import { useSelector } from "react-redux";
 
-const RobotTable = ({ isLoading }) => {
+const RobotTable = () => {
   const robots = useSelector((state) => state.data.frontend.addedRobots);
   const selectedRow = useSelector((state) => state.data.selectedRow);
 

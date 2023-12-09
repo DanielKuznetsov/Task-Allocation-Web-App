@@ -50,7 +50,6 @@ const initialState = {
     isSolved: false,
     isPlaying: false,
     currentTimeStep: 0,
-    notifications: {},
     addedTasks: [
       // {
       //   id: 0,
@@ -236,18 +235,8 @@ const dataSlice = createSlice({
     addTask: (state, action) => {
       state.frontend.addedTasks.push(action.payload);
     },
-    removeTask: (state, action) => {
-      state.frontend.addedTasks = state.frontend.addedTasks.filter(
-        (task) => task.id !== action.payload.id
-      );
-    },
     addRobot: (state, action) => {
       state.frontend.addedRobots.push(action.payload);
-    },
-    removeRobot: (state, action) => {
-      state.frontend.addedRobots = state.frontend.addedRobots.filter(
-        (robot) => robot.id !== action.payload.id
-      );
     },
     setMaxAllowedTime: (state, action) => {
       state.frontend.maxAllowedTime = action.payload;
@@ -262,13 +251,17 @@ const dataSlice = createSlice({
       const { inputId, error } = action.payload;
       state.frontend.inputErrors[inputId] = error;
     },
+    clearAllTasks: (state) => {
+      state.frontend.addedTasks = [];
+    },
+    clearAllRobots: (state) => {
+      state.frontend.addedRobots = [];
+    },
   },
 });
 
-// Selectors
 export const getCurrentTime = (state) => state.data.frontend.currentTimeStep;
 
-// Export actions and reducer
 export const {
   addTask,
   removeTask,
@@ -278,5 +271,7 @@ export const {
   solveProblem,
   setIsSolved,
   setPromptError,
+  clearAllTasks,
+  clearAllRobots,
 } = dataSlice.actions;
 export default dataSlice.reducer;

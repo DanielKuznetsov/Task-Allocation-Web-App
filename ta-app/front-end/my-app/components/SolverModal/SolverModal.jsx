@@ -8,6 +8,8 @@ import {
   setMaxAllowedTime,
   solveProblem,
   setIsSolved,
+  clearAllTasks,
+  clearAllRobots,
 } from "../../features/data/dataSlice";
 import TaskTable from "./TaskTable";
 import RobotTable from "./RobotTable";
@@ -42,6 +44,8 @@ export const SolverModal = ({ opened, close }) => {
 
     // Dispatch tasks from the file content
     const dispatchTasks = (content) => {
+      dispatch(clearAllTasks());
+
       content.tasks.forEach((task) => {
         dispatch(
           addTask({
@@ -55,6 +59,8 @@ export const SolverModal = ({ opened, close }) => {
 
     // Dispatch robots from the file content
     const dispatchRobots = (content) => {
+      dispatch(clearAllRobots());
+
       content.robots.forEach((robot) => {
         dispatch(
           addRobot({

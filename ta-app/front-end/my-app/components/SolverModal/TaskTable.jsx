@@ -1,7 +1,7 @@
 import { Table, ScrollArea, Checkbox } from "@mantine/core";
 import { useSelector } from "react-redux";
 
-const TaskTable = ({ isLoading }) => {
+const TaskTable = () => {
   const tasks = useSelector((state) => state.data.frontend.addedTasks);
   const selectedRow = useSelector((state) => state.data.selectedRow);
 
