@@ -8,22 +8,7 @@ const RobotTable = () => {
   const rows =
     robots.length > 0 ? (
       robots.map((robot) => (
-        <Table.Tr
-          key={robot.id}
-          bg={
-            selectedRow === robot.id
-              ? "var(--mantine-color-blue-light)"
-              : undefined
-          }
-        >
-          <Table.Td>
-            <Checkbox
-              aria-label="Select row"
-              checked={selectedRow === robot.id}
-              disabled={selectedRow !== null && selectedRow !== robot.id}
-              onChange={() => handleCheckboxChange(robot.id)}
-            />
-          </Table.Td>
+        <Table.Tr key={robot.id}>
           <Table.Td>{robot.id}</Table.Td>
           <Table.Td>Room {robot.startRoom}</Table.Td>
         </Table.Tr>
@@ -42,7 +27,6 @@ const RobotTable = () => {
         {/* Table Header and Body */}
         <Table.Thead>
           <Table.Tr>
-            <Table.Th style={{ width: "50px" }} />
             <Table.Th style={{ width: "50px" }}>ID</Table.Th>
             <Table.Th>Starting position</Table.Th>
           </Table.Tr>

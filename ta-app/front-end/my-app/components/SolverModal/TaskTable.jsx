@@ -8,22 +8,8 @@ const TaskTable = () => {
   const rows =
     tasks.length > 0 ? (
       tasks.map((task) => (
-        <Table.Tr
-          key={task.id}
-          bg={
-            selectedRow === task.id
-              ? "var(--mantine-color-blue-light)"
-              : undefined
-          }
-        >
-          <Table.Td>
-            <Checkbox
-              aria-label="Select row"
-              checked={selectedRow === task.id}
-              disabled={selectedRow !== null && selectedRow !== task.id}
-              onChange={() => handleCheckboxChange(task.id)}
-            />
-          </Table.Td>
+        <Table.Tr key={task.id}>
+
           <Table.Td>{task.id}</Table.Td>
           <Table.Td>Room {task.startRoom}</Table.Td>
           <Table.Td>Room {task.finalRoom}</Table.Td>
@@ -43,7 +29,6 @@ const TaskTable = () => {
         {/* Table Header and Body */}
         <Table.Thead>
           <Table.Tr>
-            <Table.Th style={{ width: "50px" }} />
             <Table.Th style={{ width: "50px" }}>ID</Table.Th>
             <Table.Th>Starting position</Table.Th>
             <Table.Th>Final position</Table.Th>
