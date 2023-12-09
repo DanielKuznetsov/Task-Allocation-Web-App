@@ -1,0 +1,13 @@
+.tableContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+  width: 100%;
+}
