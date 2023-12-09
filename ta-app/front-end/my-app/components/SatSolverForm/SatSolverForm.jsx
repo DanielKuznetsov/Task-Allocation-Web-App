@@ -143,7 +143,7 @@ export const SatSolverForm = () => {
       console.log("Sending payload:", payload);
 
       const response = await fetch(
-        "https://bscqvnlvr7aoe5qj5iscskunza0plllh.lambda-url.us-east-1.on.aws/solve",
+        "https://task-allocation.up.railway.app/solve",
         {
           method: "POST",
           headers: {
