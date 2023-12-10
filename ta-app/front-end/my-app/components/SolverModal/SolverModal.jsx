@@ -24,7 +24,6 @@ export const SolverModal = ({ opened, close }) => {
   const state = useSelector((state) => state.data);
 
   useEffect(() => {
-    // Function to read and process the file
     const processFile = (file) => {
       const reader = new FileReader();
 
@@ -73,6 +72,8 @@ export const SolverModal = ({ opened, close }) => {
 
     // Fetch and set the maximum allowed time
     const fetchMaxTime = async (content) => {
+      setIsLoading(true);
+
       try {
         const response = await fetch(
           "https://task-allocation.up.railway.app/validate",
@@ -92,6 +93,8 @@ export const SolverModal = ({ opened, close }) => {
         dispatch(setMaxAllowedTime(maxTimeResponse));
       } catch (error) {
         console.error("Error fetching max time:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -114,42 +117,46 @@ export const SolverModal = ({ opened, close }) => {
     }));
 
   const solveClicked = async () => {
-    setIsLoading(true);
-    console.log("Current state:", state);
+    if (state.frontend.maxAllowedTime !== 0) {
+      setIsLoading(true);
+      console.log("Current state:", state);
 
-    try {
-      const payload = {
-        tasks: mapTasks(Object.values(state.frontend.addedTasks)),
-        robots: mapRobots(Object.values(state.frontend.addedRobots)),
-        max_time: state.frontend.maxAllowedTime,
-      };
+      try {
+        const payload = {
+          tasks: mapTasks(Object.values(state.frontend.addedTasks)),
+          robots: mapRobots(Object.values(state.frontend.addedRobots)),
+          max_time: state.frontend.maxAllowedTime,
+        };
 
-      console.log("Sending payload:", payload);
+        console.log("Sending payload:", payload);
 
-      const response = await fetch(
-        `https://task-allocation.up.railway.app/solve`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+        const response = await fetch(
+          `https://task-allocation.up.railway.app/solve`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        if (!response.ok) {
+          const errorBody = await response.json();
+          console.error("API error:", errorBody);
+          throw new Error("API responded with an error.");
         }
-      );
 
-      if (!response.ok) {
-        const errorBody = await response.json();
-        console.error("API error:", errorBody);
-        throw new Error("API responded with an error.");
+        const data = await response.json();
+        dispatch(solveProblem(data));
+        dispatch(setIsSolved(true));
+
+        console.log("Response data:", data);
+      } catch (error) {
+        console.error("Fetch operation error:", error);
+      } finally {
+        setIsLoading(false);
       }
-
-      const data = await response.json();
-      dispatch(solveProblem(data));
-      dispatch(setIsSolved(true));
-
-      console.log("Response data:", data);
-    } catch (error) {
-      console.error("Fetch operation error:", error);
-    } finally {
-      setIsLoading(false);
+    } else {
+      console.error("Max allowed time must be above 0.");
     }
   };
 
