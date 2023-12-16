@@ -3,7 +3,8 @@
   width: 22.5px;
   height: 22.5px;
 
-  border: 1px solid black;
+  border-right: 1px solid #c2c2c4;
+  border-bottom: 1px solid #c2c2c4;
 }
 
 /* Default cell styles */

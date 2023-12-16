@@ -2,7 +2,7 @@ import typography from "../../design-system/typography.module.css";
 import classes from "./ID.module.css";
 import PropTypes from "prop-types";
 
-export const ID = ({ id, mode, location }) => {
+export const ID = ({ id, mode, location, top, left }) => {
   let additionalClass = "";
   let textStyle = "";
 
@@ -25,7 +25,7 @@ export const ID = ({ id, mode, location }) => {
   } ${additionalClass}`;
 
   return (
-    <div className={className}>
+    <div className={className} style={{top: `${top * 22.5}px`, left: `${left * 22.5}px`}}>
       <span className={textStyle}>
         {mode === "robot" ? "R" : "T"}
         {id}

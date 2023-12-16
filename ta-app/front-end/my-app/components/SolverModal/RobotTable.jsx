@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 const RobotTable = () => {
   const robots = useSelector((state) => state.data.frontend.addedRobots);
-  const selectedRow = useSelector((state) => state.data.selectedRow);
 
   const rows =
     robots.length > 0 ? (

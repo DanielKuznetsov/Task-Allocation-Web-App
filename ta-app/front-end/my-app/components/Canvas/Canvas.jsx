@@ -5,6 +5,7 @@ import { Cell } from "../Cell/Cell";
 import { ID } from "../ID/ID";
 import findPath from "./pathfinding";
 import { setIsPlaying } from "../../features/data/dataSlice";
+import typography from "../../design-system/typography.module.css";
 
 const DEFAULT_POSITIONS = {
   1: { x: 3, y: 3 },
@@ -14,6 +15,16 @@ const DEFAULT_POSITIONS = {
   5: { x: 3, y: 15 },
   6: { x: 26, y: 3 },
   7: { x: 26, y: 15 },
+};
+
+const ROOM_NAMES_LOCATIONS = {
+  1: { x: 1, y: 1 },
+  2: { x: 12, y: 1 },
+  3: { x: 1, y: 7 },
+  4: { x: 7, y: 7 },
+  5: { x: 1, y: 13 },
+  6: { x: 24, y: 1 },
+  7: { x: 24, y: 13 },
 };
 
 export const Canvas = () => {
@@ -39,6 +50,23 @@ export const Canvas = () => {
       }
     })
   );
+
+  const roomNames = Object.keys(ROOM_NAMES_LOCATIONS).map((room, index) => {
+    const { x, y } = ROOM_NAMES_LOCATIONS[room];
+    return (
+      <span
+        className={typography["text_xs_semibold"]}
+        style={{
+          position: "absolute",
+          left: `${x * 22.5 + 2.75}px`,
+          top: `${y * 22.5 + 2.5}px`,
+          fontWeight: "bold",
+        }}
+      >
+        #{room}
+      </span>
+    );
+  });
 
   let robotsPaths = [];
   for (let i = 0; i < robotsN; i++) {
@@ -175,17 +203,27 @@ export const Canvas = () => {
 
   const restartCurrentTime = () => {
     setCurrentTime(0);
-    toggleIsPlaying()
+    toggleIsPlaying();
   };
 
   return (
     <div className={classes.container}>
-      <button onClick={toggleIsPlaying} disabled={Object.keys(backend).length === 0}>
+      <button
+        onClick={toggleIsPlaying}
+        disabled={Object.keys(backend).length === 0}
+      >
         Toggle isPlaying!
       </button>
-      <button onClick={restartCurrentTime} disabled={Object.keys(backend).length === 0}>Set currentTime to 0 - restart</button>
+      <button
+        onClick={restartCurrentTime}
+        disabled={Object.keys(backend).length === 0}
+      >
+        Set currentTime to 0 - restart
+      </button>
       <div className={classes.canvas}>
         {cells}
+
+        {roomNames}
 
         {ids}
       </div>

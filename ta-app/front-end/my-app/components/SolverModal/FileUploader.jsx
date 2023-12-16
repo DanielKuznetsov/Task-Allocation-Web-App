@@ -1,6 +1,8 @@
 import { FileInput } from "@mantine/core";
 
 const FileUploader = ({ isLoading, file, setFile }) => {
+  console.log("FileUploader")
+  console.log("isLoading: ", isLoading)
   return (
     <FileInput
       disabled={isLoading}

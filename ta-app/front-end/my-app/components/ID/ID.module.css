@@ -3,21 +3,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  position: absolute;
 }
 
 .table {
   width: 1.5rem;
   height: 1.5rem;
 }
-/* 
+
 .grid {
   width: 22.5px;
   height: 22.5px;
-} */
-
-.grid {
-  width: 1.75rem;
-  height: 1.75rem;
 }
 
 .robot {
