@@ -4,8 +4,23 @@ import classes from "./Canvas.module.css";
 import { Cell } from "../Cell/Cell";
 import { ID } from "../ID/ID";
 import findPath from "./pathfinding";
-import { setIsPlaying } from "../../features/data/dataSlice";
+import {
+  setIsPlaying,
+  setCurrentTimeStep,
+} from "../../features/data/dataSlice";
 import typography from "../../design-system/typography.module.css";
+import { Text } from "@mantine/core";
+import { Slider, Button } from "@mantine/core";
+import {
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+  PlayIcon,
+  PauseIcon,
+  ResetIcon,
+} from "@radix-ui/react-icons";
+import TaskTableMain from "./TaskTableMain";
+import RobotTableMain from "./RobotTableMain";
+import AnimatedID from "../ID/AnimatedID";
 
 const DEFAULT_POSITIONS = {
   1: { x: 3, y: 3 },
@@ -55,6 +70,7 @@ export const Canvas = () => {
     const { x, y } = ROOM_NAMES_LOCATIONS[room];
     return (
       <span
+        key={index}
         className={typography["text_xs_semibold"]}
         style={{
           position: "absolute",
@@ -73,17 +89,15 @@ export const Canvas = () => {
     robotsPaths.push(new Array(maxAllowedTime).fill(null));
   }
 
-  // Process the path for each robot
   for (let eachRobot = 0; eachRobot < robotsN; eachRobot++) {
     let lastKnownRoom = null;
     let transitStartIndex = null;
     let inTransit = false;
 
     for (let timeStep = 0; timeStep <= maxAllowedTime; timeStep++) {
-      const room = timeline[timeStep]?.robotsLocations?.[eachRobot]?.room; // Safe navigation
+      const room = timeline[timeStep]?.robotsLocations?.[eachRobot]?.room;
 
       if (room && room !== 0) {
-        // If we are coming out of a transit
         if (inTransit) {
           const path = calculatePath(
             lastKnownRoom,
@@ -96,7 +110,6 @@ export const Canvas = () => {
           }
         }
 
-        // Update last known room and path
         lastKnownRoom = room;
         transitStartIndex = timeStep;
         inTransit = false;
@@ -106,19 +119,13 @@ export const Canvas = () => {
         ];
       } else if (room === 0) {
         if (lastKnownRoom !== null && !inTransit) {
-          // Just entered transit
           inTransit = true;
           transitStartIndex = timeStep - 1;
         }
-
-        // If we are in transit, do nothing until we find the next non-zero room
-        // We will fill the path once we have the next known room
       }
     }
 
-    // If the robot ends in transit, calculate the last segment
     if (inTransit) {
-      // Assuming the robot needs to stay in the last known room if no further instructions are given
       robotsPaths[eachRobot].fill(
         [
           DEFAULT_POSITIONS[lastKnownRoom].x,
@@ -129,7 +136,6 @@ export const Canvas = () => {
     }
   }
 
-  // Helper function to calculate the path using the pathfinding library
   function calculatePath(startRoom, endRoom, steps) {
     const startX = DEFAULT_POSITIONS[startRoom].x;
     const startY = DEFAULT_POSITIONS[startRoom].y;
@@ -138,38 +144,53 @@ export const Canvas = () => {
 
     const path = findPath([startX, startY], [finalX, finalY]);
 
-    // console.log("PATHFINDING");
-    // console.log(path);
-
     const stepIncrement = path.length / steps;
 
     let interpolatedPath = [];
     for (let step = 0; step < steps; step++) {
       interpolatedPath.push(path[Math.floor(step * stepIncrement)]);
-
-      //   console.log("startRoom: ", startRoom);
-      //   console.log("endRoom: ", endRoom);
-      //   console.log("path: ", path);
-      //   console.log("step: ", step);
-      //   console.log("stepIncrement: ", stepIncrement);
-      //   console.log(
-      //     "path[Math.floor(step * stepIncrement)]",
-      //     path[Math.floor(step * stepIncrement)]
-      //   );
     }
     return interpolatedPath;
   }
 
-  console.log("ROBOTS PATHS");
-  console.log(robotsPaths);
-
   const [currentTime, setCurrentTime] = useState(0);
+  const [ids, setIds] = useState([]);
+
+  useEffect(() => {
+    const newIds = robotsPaths.map((robotPath, robotIndex) => {
+      return robotPath
+        .map((path, timeStep) => {
+          if (path && currentTime === timeStep) {
+            return (
+              <ID
+                key={`${robotIndex}-${timeStep}`}
+                id={robotIndex.toString()}
+                mode="robot"
+                location="grid"
+                top={path[1]}
+                left={path[0]}
+                currentTime={currentTime}
+                path={robotPath}
+              />
+            );
+          }
+          return null;
+        })
+        .filter((component) => component !== null);
+    });
+
+    if (JSON.stringify(newIds) !== JSON.stringify(ids)) {
+      setIds(newIds);
+    }
+  }, [currentTime, robotsPaths]);
 
   useEffect(() => {
     if (isPlaying) {
       if (currentTime < maxAllowedTime) {
         const interval = setInterval(() => {
+          const time = currentTime + 1;
           setCurrentTime((currentTime) => currentTime + 1);
+          dispatch(setCurrentTimeStep(time));
         }, 1000);
 
         return () => clearInterval(interval);
@@ -177,55 +198,174 @@ export const Canvas = () => {
     }
   }, [currentTime, maxAllowedTime, isPlaying]);
 
-  const ids = robotsPaths.map((robotPath, robotIndex) => {
-    return robotPath
-      .map((path, timeStep) => {
-        if (path && currentTime === timeStep) {
-          return (
-            <ID
-              key={`${robotIndex}-${timeStep}`}
-              id={robotIndex.toString()}
-              mode="robot"
-              location="grid"
-              top={path[1]}
-              left={path[0]}
-            />
-          );
-        }
-        return null;
-      })
-      .filter((component) => component !== null);
-  });
-
-  const toggleIsPlaying = () => {
-    dispatch(setIsPlaying(!isPlaying));
+  const pause = () => {
+    toggleIsPlaying(false);
   };
 
-  const restartCurrentTime = () => {
+  const play = () => {
+    toggleIsPlaying(true);
+  };
+
+  const reset = () => {
     setCurrentTime(0);
     toggleIsPlaying();
+
+    dispatch(setCurrentTimeStep(0));
+  };
+
+  const moveBackTwo = () => {
+    const newTime = currentTime - 2;
+    if (newTime >= 0 && currentTime - 2 >= 0) {
+      setCurrentTime(newTime);
+      dispatch(setCurrentTimeStep(newTime));
+    }
+  };
+
+  const moveForwardTwo = () => {
+    const newTime = currentTime + 2;
+    if (newTime <= maxAllowedTime) {
+      setCurrentTime(newTime);
+      dispatch(setCurrentTimeStep(newTime));
+    }
+  };
+
+  const toggleIsPlaying = (action) => {
+    dispatch(setIsPlaying(action));
+  };
+
+  const updateTimeStep = (time) => {
+    setCurrentTime(time);
+
+    dispatch(setCurrentTimeStep(time));
   };
 
   return (
-    <div className={classes.container}>
-      <button
-        onClick={toggleIsPlaying}
-        disabled={Object.keys(backend).length === 0}
-      >
-        Toggle isPlaying!
-      </button>
-      <button
-        onClick={restartCurrentTime}
-        disabled={Object.keys(backend).length === 0}
-      >
-        Set currentTime to 0 - restart
-      </button>
-      <div className={classes.canvas}>
-        {cells}
+    <div className={classes.mainSectionContainer}>
+      <div className={classes.animationContainer}>
+        <div className={classes.canvas}>
+          {cells}
 
-        {roomNames}
+          {roomNames}
 
-        {ids}
+          {ids}
+        </div>
+      </div>
+
+      <div>
+        <div className={classes.timerContainer}>
+          <div className={classes.currentTime}>
+            <Text
+              size="xl"
+              fw={900}
+              variant="gradient"
+              gradient={{ from: "blue", to: "cyan", deg: 90 }}
+            >
+              {maxAllowedTime === 0
+                ? "No data available yet!"
+                : currentTime === 0
+                ? "Not started yet!"
+                : `Time Step: ${currentTime}`}
+            </Text>
+          </div>
+
+          {maxAllowedTime !== 0 ? (
+            <div className={classes.controllersWrapper}>
+              <div className={classes.buttonControllers}>
+                <Button
+                  size="xs"
+                  onClick={moveBackTwo}
+                  variant="outline"
+                  color="gray"
+                >
+                  <DoubleArrowLeftIcon />
+                </Button>
+                <Button
+                  size="xs"
+                  onClick={pause}
+                  variant="outline"
+                  color="gray"
+                >
+                  <PauseIcon />
+                </Button>
+                <Button size="xs" onClick={play} variant="outline" color="gray">
+                  <PlayIcon />
+                </Button>
+                <Button
+                  size="xs"
+                  onClick={reset}
+                  variant="outline"
+                  color="gray"
+                >
+                  <ResetIcon />
+                </Button>
+                <Button
+                  size="xs"
+                  onClick={moveForwardTwo}
+                  variant="outline"
+                  color="gray"
+                >
+                  <DoubleArrowRightIcon />
+                </Button>
+              </div>
+
+              <div className="timer-slider">
+                <Slider
+                  onChange={updateTimeStep}
+                  max={maxAllowedTime}
+                  defaultValue={0}
+                  value={currentTime}
+                  marks={[
+                    { value: Math.round(maxAllowedTime * 0.2), label: "20%" },
+                    { value: Math.round(maxAllowedTime * 0.5), label: "50%" },
+                    { value: Math.round(maxAllowedTime * 0.8), label: "80%" },
+                  ]}
+                  size={2}
+                  classNames={classes}
+                />
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+
+        <div>
+          <Text
+            className={typography["text_xl_medium"]}
+            size="sm"
+            style={{ marginBottom: "10px" }}
+          >
+            Tasks Tab
+          </Text>
+          <div
+            style={{
+              height: "165px",
+              border: "1px solid #e0e0e0",
+              marginBottom: "2rem",
+            }}
+          >
+            <TaskTableMain />
+          </div>
+        </div>
+
+        <div>
+          <Text
+            className={typography["text_xl_medium"]}
+            size="sm"
+            style={{ marginBottom: "10px" }}
+          >
+            Robots Tab
+          </Text>
+          <div
+            style={{
+              height: "136px",
+              border: "1px solid #e0e0e0",
+              marginBottom: "2rem",
+            }}
+          >
+            <RobotTableMain />
+          </div>
+        </div>
       </div>
     </div>
   );

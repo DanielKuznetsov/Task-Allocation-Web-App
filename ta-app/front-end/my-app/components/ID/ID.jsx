@@ -1,8 +1,10 @@
 import typography from "../../design-system/typography.module.css";
 import classes from "./ID.module.css";
 import PropTypes from "prop-types";
+import { useSpring, animated } from "@react-spring/web";
+import React, { useState, useEffect } from "react";
 
-export const ID = ({ id, mode, location, top, left }) => {
+export const ID = ({ id, mode, location, top, left, currentTime, path }) => {
   let additionalClass = "";
   let textStyle = "";
 
@@ -25,7 +27,10 @@ export const ID = ({ id, mode, location, top, left }) => {
   } ${additionalClass}`;
 
   return (
-    <div className={className} style={{top: `${top * 22.5}px`, left: `${left * 22.5}px`}}>
+    <div
+      className={className}
+      style={{ top: `${top * 22.5}px`, left: `${left * 22.5}px` }}
+    >
       <span className={textStyle}>
         {mode === "robot" ? "R" : "T"}
         {id}

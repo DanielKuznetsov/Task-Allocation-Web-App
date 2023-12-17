@@ -46,9 +46,11 @@ const initialState = {
     // },
   },
   frontend: {
+    ids: [],
     isLoading: false,
-    isSolved: false,
+    isSolved: true,
     isPlaying: false,
+    robotsPath: [],
     currentTimeStep: 0,
     addedTasks: [
       // {
@@ -235,6 +237,12 @@ const dataSlice = createSlice({
     addTask: (state, action) => {
       state.frontend.addedTasks.push(action.payload);
     },
+    setNewIds: (state, action) => {
+      state.frontend.ids = action.payload;
+    },
+    setRobotsPath: (state, action) => {
+      state.frontend.robotsPath = action.payload;
+    },
     addRobot: (state, action) => {
       state.frontend.addedRobots.push(action.payload);
     },
@@ -246,6 +254,12 @@ const dataSlice = createSlice({
     },
     setIsSolved: (state, action) => {
       state.frontend.isSolved = action.payload;
+    },
+    setIsPlaying: (state, action) => {
+      state.frontend.isPlaying = action.payload;
+    },
+    setCurrentTimeStep: (state, action) => {
+      state.frontend.currentTimeStep = action.payload;
     },
     setPromptError: (state, action) => {
       const { inputId, error } = action.payload;
@@ -270,8 +284,12 @@ export const {
   setMaxAllowedTime,
   solveProblem,
   setIsSolved,
+  setIsPlaying,
   setPromptError,
+  setCurrentTimeStep,
   clearAllTasks,
   clearAllRobots,
+  setRobotsPath,
+  setNewIds,
 } = dataSlice.actions;
 export default dataSlice.reducer;

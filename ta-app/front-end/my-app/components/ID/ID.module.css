@@ -5,6 +5,7 @@
   justify-content: center;
 
   position: absolute;
+  transition: all 0.2s ease-in-out;
 }
 
 .table {
