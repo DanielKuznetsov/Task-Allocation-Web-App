@@ -11,7 +11,7 @@ const TaskTableMain = () => {
           <Table.Td>{task.id}</Table.Td>
           <Table.Td>Room {task.startRoom}</Table.Td>
           <Table.Td>Room {task.finalRoom}</Table.Td>
-          <Table.Td>0</Table.Td>
+          <Table.Td>N/A</Table.Td>
         </Table.Tr>
       ))
     ) : (

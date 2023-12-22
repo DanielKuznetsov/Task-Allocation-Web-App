@@ -169,8 +169,6 @@ export const Canvas = () => {
                 location="grid"
                 top={path[1]}
                 left={path[0]}
-                currentTime={currentTime}
-                path={robotPath}
               />
             );
           }
