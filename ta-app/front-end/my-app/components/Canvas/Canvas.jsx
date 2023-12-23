@@ -21,8 +21,7 @@ import {
 } from "@radix-ui/react-icons";
 import TaskTableMain from "./TaskTableMain";
 import RobotTableMain from "./RobotTableMain";
-import AnimatedID from "../ID/AnimatedID";
-import Image from "next/image";
+import toast, { Toast } from "react-hot-toast";
 
 const DEFAULT_POSITIONS = {
   1: { x: 3, y: 3 },
@@ -256,6 +255,11 @@ export const Canvas = () => {
   };
 
   const toggleIsPlaying = (action) => {
+    if (isPlaying === true) {
+      toast.success("Animation is already on!")
+    } else {
+      toast.success("Animation has started!")
+    }
     dispatch(setIsPlaying(action));
   };
 
@@ -283,9 +287,9 @@ export const Canvas = () => {
         <div className={classes.timerContainer}>
           <div className={classes.currentTime}>
             <Text
-              size={maxAllowedTime === 0 ? "" : "xl"}
-              fw={maxAllowedTime === 0 ? "" : 900}
-              c="rgba(0, 0, 0, 0.85)"
+              size={maxAllowedTime === 0 ? "md" : "xl"}
+              fw={maxAllowedTime === 0 ? null : 600}
+              c="#000000d9"
             >
               {maxAllowedTime === 0 ? (
                 <span className={classes.zeroDataSlider}>
