@@ -1,6 +1,7 @@
 import { Table, ScrollArea } from "@mantine/core";
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
+import { StatusBar } from "../Status/StatusBar";
 
 const TaskTableMain = () => {
   const tasks = useSelector((state) => state.data.frontend.addedTasks);
@@ -55,7 +56,10 @@ const TaskTableMain = () => {
           <Table.Td>{task.id}</Table.Td>
           <Table.Td>Room {task.startRoom}</Table.Td>
           <Table.Td>Room {task.finalRoom}</Table.Td>
-          <Table.Td style={{ width: "100px" }}>{statusMap[task.id]}</Table.Td>
+          <Table.Td style={{ width: "100px" }}>
+            {" "}
+            <StatusBar status={statusMap[task.id]} />
+          </Table.Td>
         </Table.Tr>
       ))
     ) : (

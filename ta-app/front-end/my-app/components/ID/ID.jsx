@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useSpring, animated } from "@react-spring/web";
 import React, { useState, useEffect } from "react";
 
-export const ID = ({ id, mode, location, top, left, currentTime, path }) => {
+export const ID = ({ id, mode, location, top, left }) => {
   let additionalClass = "";
   let textStyle = "";
 

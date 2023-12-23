@@ -1,0 +1,55 @@
+.defaultStyles {
+  width: 100%;
+  border-radius: var(--spacing-regular);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.none {
+  background-color: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  color: var(--blue-600);
+}
+
+/* Picked up */
+.pickedUp {
+  background-color: var(--purple-50);
+  border: 1px solid var(--purple-100);
+  color: var(--purple-600);
+}
+
+/* Dropped off */
+.droppedOff {
+  background-color: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  color: var(--blue-600);
+}
+
+/* Delivering */
+.delivering {
+  background-color: var(--orange-50);
+  border: 1px solid var(--orange-100);
+  color: var(--orange-600);
+}
+
+/* Idle */
+.idle {
+  background-color: var(--neutral-50);
+  border: 1px solid var(--neutral-100);
+  color: var(--neutral-600);
+}
+
+/* Completed */
+.completed {
+  background-color: var(--green-50);
+  border: 1px solid var(--green-100);
+  color: var(--green-600);
+}
+
+/* En route */
+.enRoute {
+  background-color: var(--yellow-50);
+  border: 1px solid var(--yellow-100);
+  color: var(--yellow-600);
+}

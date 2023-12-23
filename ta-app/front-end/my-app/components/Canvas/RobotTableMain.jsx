@@ -1,6 +1,7 @@
 import { Table, ScrollArea } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { StatusBar } from "../Status/StatusBar";
 
 const RobotTableMain = () => {
   const robots = useSelector((state) => state.data.frontend.addedRobots);
@@ -42,7 +43,9 @@ const RobotTableMain = () => {
         <Table.Tr style={{ borderBottom: "1px solid #efefef" }} key={robot.id}>
           <Table.Td>{robot.id}</Table.Td>
           <Table.Td>{updateCurrentRoom(robot.id)}</Table.Td>
-          <Table.Td style={{ width: "100px" }}>{statusMap[robot.id]}</Table.Td>
+          <Table.Td style={{ width: "110px" }}>
+            <StatusBar status={statusMap[robot.id]} />
+          </Table.Td>
           <Table.Td>
             {whoCarriesWhat &&
               whoCarriesWhat[idx]?.length > 0 &&
