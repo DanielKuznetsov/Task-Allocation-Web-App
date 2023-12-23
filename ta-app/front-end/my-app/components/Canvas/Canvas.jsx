@@ -287,8 +287,8 @@ export const Canvas = () => {
         <div className={classes.timerContainer}>
           <div className={classes.currentTime}>
             <Text
-              size={maxAllowedTime === 0 ? "md" : "xl"}
-              fw={maxAllowedTime === 0 ? null : 600}
+              size={timeline === undefined ? "md" : "xl"}
+              fw={timeline === undefined ? null : 600}
               c="#000000d9"
             >
               {timeline === undefined ? (
@@ -315,6 +315,7 @@ export const Canvas = () => {
                 >
                   <DoubleArrowLeftIcon />
                 </Button>
+
                 <Button
                   size="xs"
                   onClick={pause}
@@ -323,9 +324,11 @@ export const Canvas = () => {
                 >
                   <PauseIcon />
                 </Button>
+
                 <Button size="xs" onClick={play} variant="outline" color="gray">
                   <PlayIcon />
                 </Button>
+
                 <Button
                   size="xs"
                   onClick={reset}
@@ -334,6 +337,7 @@ export const Canvas = () => {
                 >
                   <ResetIcon />
                 </Button>
+
                 <Button
                   size="xs"
                   onClick={moveForwardTwo}
@@ -380,7 +384,7 @@ export const Canvas = () => {
             style={{
               height: "165px",
               border: "1px solid #e0e0e0",
-              marginBottom: "2rem",
+              marginBottom: "1.5rem",
             }}
           >
             <TaskTableMain />
@@ -399,7 +403,7 @@ export const Canvas = () => {
             style={{
               height: "136px",
               border: "1px solid #e0e0e0",
-              marginBottom: "2rem",
+              // marginBottom: "2rem",
             }}
           >
             <RobotTableMain />

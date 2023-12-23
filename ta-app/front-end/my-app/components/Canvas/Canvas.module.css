@@ -4,19 +4,25 @@
   justify-content: space-between;
   max-width: 71.25rem;
   margin: 10rem auto;
-
-  /* background-color: bisque; */
 }
 
 .timerContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
 
   padding: 2rem 0 2rem 0;
-  /* background-color: aqua; */
   border: 1px solid #e0e0e0;
   border-radius: 3px;
+}
+
+.buttonControllers {
+  display: flex;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
 }
 
 .zeroDataSlider {
@@ -28,7 +34,6 @@
 
 .animationContainer {
   max-width: 42.1875rem; /* 675px */
-  /* margin: 0 auto; */
 }
 
 .canvas {
@@ -47,26 +52,10 @@
   justify-self: center;
 }
 
-.timerContainer {
-  margin-bottom: 3rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.buttonControllers {
-  display: flex;
-  margin-bottom: 1.25rem;
-  gap: 1rem;
-}
 
 /* Slider styles */
 .track::before {
-  background-color: light-dark(
-    var(--mantine-color-gray-5),
-    var(--mantine-color-dark-3)
-  );
+  background-color: rgba(186, 186, 186, 0.8);
 }
 
 .mark {
