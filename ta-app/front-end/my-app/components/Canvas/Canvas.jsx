@@ -17,10 +17,12 @@ import {
   PlayIcon,
   PauseIcon,
   ResetIcon,
+  ExclamationTriangleIcon,
 } from "@radix-ui/react-icons";
 import TaskTableMain from "./TaskTableMain";
 import RobotTableMain from "./RobotTableMain";
 import AnimatedID from "../ID/AnimatedID";
+import Image from "next/image";
 
 const DEFAULT_POSITIONS = {
   1: { x: 3, y: 3 },
@@ -281,16 +283,20 @@ export const Canvas = () => {
         <div className={classes.timerContainer}>
           <div className={classes.currentTime}>
             <Text
-              size="xl"
-              fw={900}
-              variant="gradient"
-              gradient={{ from: "blue", to: "cyan", deg: 90 }}
+              size={maxAllowedTime === 0 ? "" : "xl"}
+              fw={maxAllowedTime === 0 ? "" : 900}
+              c="rgba(0, 0, 0, 0.85)"
             >
-              {maxAllowedTime === 0
-                ? "No data available yet!"
-                : currentTime === 0
-                ? "Not started yet!"
-                : `Time Step: ${currentTime}`}
+              {maxAllowedTime === 0 ? (
+                <span className={classes.zeroDataSlider}>
+                  <ExclamationTriangleIcon color="red" width="48" height="48" />
+                  <span>No data to display at the moment. </span>
+                </span>
+              ) : currentTime === 0 ? (
+                "Not started yet!"
+              ) : (
+                `Time Step: ${currentTime}`
+              )}
             </Text>
           </div>
 

@@ -19,7 +19,8 @@
 
 .robot {
   border-radius: 50%;
-  border: 1px solid rgba(31, 35, 40, 0.25);
+  border: 1px solid rgba(31, 35, 40, 1);
+  background-color: rgba(31, 35, 40, .1);
 }
 
 .task {
