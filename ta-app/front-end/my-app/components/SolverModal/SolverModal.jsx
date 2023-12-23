@@ -109,8 +109,16 @@ export const SolverModal = ({ opened, close }) => {
 
       toast.promise(fetchOperation(), {
         loading: "Fetching max time...",
-        success: (maxTimeResponse) =>
-          `Max time fetched successfully: ${maxTimeResponse}`,
+        success: (maxTimeResponse) => {
+          toast.success(`Max time fetched successfully: ${maxTimeResponse}`, {
+            duration: 6000,
+          });
+
+          toast.success('Now, click the "Solve Problem" button', {
+            duration: 6000,
+          });
+          return "Max time fetched and ready to solve!";
+        },
         error: (error) => `Error fetching max time: ${error.message}`,
       });
     };
