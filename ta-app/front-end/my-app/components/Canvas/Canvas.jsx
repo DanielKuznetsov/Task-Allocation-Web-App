@@ -225,24 +225,30 @@ export const Canvas = () => {
 
   const pause = () => {
     toggleIsPlaying(false);
+    toast.success("Animation paused");
   };
 
   const play = () => {
     toggleIsPlaying(true);
+    toast.success("Animation started");
   };
 
   const reset = () => {
     setCurrentTime(0);
-    toggleIsPlaying();
+    toggleIsPlaying(false);
 
     dispatch(setCurrentTimeStep(0));
+    toast.success("Animation reset to beginning");
   };
 
   const moveBackTwo = () => {
     const newTime = currentTime - 2;
-    if (newTime >= 0 && currentTime - 2 >= 0) {
+    if (newTime >= 0) {
       setCurrentTime(newTime);
       dispatch(setCurrentTimeStep(newTime));
+      toast.success("Moved back two steps");
+    } else {
+      toast.error("Can't move back further");
     }
   };
 
@@ -251,15 +257,13 @@ export const Canvas = () => {
     if (newTime <= maxAllowedTime) {
       setCurrentTime(newTime);
       dispatch(setCurrentTimeStep(newTime));
+      toast.success("Moved forward two steps");
+    } else {
+      toast.error("Reached the end of the timeline");
     }
   };
 
   const toggleIsPlaying = (action) => {
-    if (isPlaying === true) {
-      toast.success("Animation is already on!")
-    } else {
-      toast.success("Animation has started!")
-    }
     dispatch(setIsPlaying(action));
   };
 
