@@ -291,7 +291,7 @@ export const Canvas = () => {
               fw={maxAllowedTime === 0 ? null : 600}
               c="#000000d9"
             >
-              {maxAllowedTime === 0 ? (
+              {timeline === undefined ? (
                 <span className={classes.zeroDataSlider}>
                   <ExclamationTriangleIcon color="red" width="48" height="48" />
                   <span>No data to display at the moment. </span>
@@ -304,7 +304,7 @@ export const Canvas = () => {
             </Text>
           </div>
 
-          {maxAllowedTime !== 0 ? (
+          {timeline !== undefined ? (
             <div className={classes.controllersWrapper}>
               <div className={classes.buttonControllers}>
                 <Button

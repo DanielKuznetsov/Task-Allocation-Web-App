@@ -5,6 +5,7 @@ import { StatusBar } from "../Status/StatusBar";
 
 const TaskTableMain = () => {
   const tasks = useSelector((state) => state.data.frontend.addedTasks);
+  const timeline = useSelector((state) => state.data.backend.timeline);
   const backendTasks = useSelector(
     (state) => state.data.backend.tasksLocations
   );
@@ -50,7 +51,7 @@ const TaskTableMain = () => {
   }, [currentTimeStep, tasks, backendTasks]);
 
   const rows =
-    tasks.length > 0 ? (
+    timeline !== undefined ? (
       tasks.map((task) => (
         <Table.Tr style={{ borderBottom: "1px solid #efefef" }} key={task.id}>
           <Table.Td>{task.id}</Table.Td>

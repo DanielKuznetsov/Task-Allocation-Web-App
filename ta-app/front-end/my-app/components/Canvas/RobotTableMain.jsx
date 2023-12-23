@@ -38,7 +38,7 @@ const RobotTableMain = () => {
   };
 
   const rows =
-    robots.length > 0 ? (
+    timeline !== undefined ? (
       robots.map((robot, idx) => (
         <Table.Tr style={{ borderBottom: "1px solid #efefef" }} key={robot.id}>
           <Table.Td>{robot.id}</Table.Td>
