@@ -16,6 +16,7 @@ import RobotTable from "./RobotTable";
 import FileUploader from "./FileUploader";
 import SolveButton from "./SolveButton";
 import classes from "./SolverModal.module.css";
+import toast from "react-hot-toast";
 
 export const SolverModal = ({ opened, close }) => {
   const [file, setFile] = useState(null);
@@ -70,11 +71,23 @@ export const SolverModal = ({ opened, close }) => {
       });
     };
 
-    // Fetch and set the maximum allowed time
-    const fetchMaxTime = async (content) => {
-      setIsLoading(true);
+    const fetchMaxTime = (content) => {
+      const idsAreUnique = (items) => {
+        const ids = items.map((item) => item.robot_ID || item.task_ID);
+        return new Set(ids).size === ids.length;
+      };
 
-      try {
+      if (!idsAreUnique(content.robots) || !idsAreUnique(content.tasks)) {
+        toast.error("IDs of robots and tasks must be unique.", {
+          duration: 3000,
+        });
+        toast.error("Please re-upload a data file with unique IDs.", {
+          duration: 3000,
+        });
+        return;
+      }
+
+      const fetchOperation = async () => {
         const response = await fetch(
           "https://task-allocation.up.railway.app/validate",
           {
@@ -91,11 +104,15 @@ export const SolverModal = ({ opened, close }) => {
         const maxTimeResponse = await response.json();
         console.log("maxTimeResponse", maxTimeResponse);
         dispatch(setMaxAllowedTime(maxTimeResponse));
-      } catch (error) {
-        console.error("Error fetching max time:", error);
-      } finally {
-        setIsLoading(false);
-      }
+        return maxTimeResponse;
+      };
+
+      toast.promise(fetchOperation(), {
+        loading: "Fetching max time...",
+        success: (maxTimeResponse) =>
+          `Max time fetched successfully: ${maxTimeResponse}`,
+        error: (error) => `Error fetching max time: ${error.message}`,
+      });
     };
 
     if (file) {
@@ -116,12 +133,11 @@ export const SolverModal = ({ opened, close }) => {
       robot_ID: robot.id,
     }));
 
-  const solveClicked = async () => {
+  const solveClicked = () => {
     if (state.frontend.maxAllowedTime !== 0) {
-      setIsLoading(true);
       console.log("Current state:", state);
 
-      try {
+      const solveOperation = async () => {
         const payload = {
           tasks: mapTasks(Object.values(state.frontend.addedTasks)),
           robots: mapRobots(Object.values(state.frontend.addedRobots)),
@@ -142,7 +158,7 @@ export const SolverModal = ({ opened, close }) => {
         if (!response.ok) {
           const errorBody = await response.json();
           console.error("API error:", errorBody);
-          throw new Error("API responded with an error.");
+          throw new Error(errorBody.message || "API responded with an error.");
         }
 
         const data = await response.json();
@@ -150,13 +166,23 @@ export const SolverModal = ({ opened, close }) => {
         dispatch(setIsSolved(true));
 
         console.log("Response data:", data);
-      } catch (error) {
-        console.error("Fetch operation error:", error);
-      } finally {
-        setIsLoading(false);
-      }
+        return data;
+      };
+
+      toast.promise(
+        solveOperation(),
+        {
+          loading: "Solving problem...",
+          success:
+            "You can now close this form and use the play button to start the animation\n\n Control animation with the available buttons.",
+          error: (error) => `Error solving problem: ${error.message}`,
+        },
+        {
+          duration: 7000,
+        }
+      );
     } else {
-      console.error("Max allowed time must be above 0.");
+      toast.error("Max allowed time must be above 0.");
     }
   };
 
