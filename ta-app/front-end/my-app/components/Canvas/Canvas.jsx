@@ -340,12 +340,17 @@ export const Canvas = () => {
                   max={maxAllowedTime}
                   defaultValue={0}
                   value={currentTime}
+                  label={(value) => `Time: ${value}`}
+                  // styles={{ markLabel: { display: 'none' } }}
                   marks={[
-                    { value: Math.round(maxAllowedTime * 0.2), label: "20%" },
+                    // { value: Math.round(maxAllowedTime * 0.2), label: "20%" },
+                    { value: Math.round(maxAllowedTime * 0), label: "0%" },
                     { value: Math.round(maxAllowedTime * 0.5), label: "50%" },
-                    { value: Math.round(maxAllowedTime * 0.8), label: "80%" },
+                    { value: Math.round(maxAllowedTime * 1), label: "100%" },
+                    // { value: Math.round(maxAllowedTime * 0.8), label: "80%" },
                   ]}
-                  size={2}
+                  size="md"
+                  color="blue"
                   classNames={classes}
                 />
               </div>

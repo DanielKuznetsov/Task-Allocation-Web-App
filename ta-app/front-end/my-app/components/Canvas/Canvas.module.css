@@ -1,9 +1,9 @@
 .mainSectionContainer {
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   justify-content: space-between;
   max-width: 71.25rem;
-  margin: 10rem auto ;
+  margin: 10rem auto;
 
   /* background-color: bisque; */
 }
@@ -52,20 +52,14 @@
 /* Slider styles */
 .track::before {
   background-color: light-dark(
-    var(--mantine-color-gray-1),
+    var(--mantine-color-gray-5),
     var(--mantine-color-dark-3)
   );
 }
 
 .mark {
-  width: rem(6px);
-  height: rem(6px);
-  border-radius: rem(6px);
-  transform: translateX(rem(-3px)) translateY(rem(-2px));
-  border-color: light-dark(
-    var(--mantine-color-gray-1),
-    var(--mantine-color-dark-3)
-  );
+  scale: 2;
+  border-radius: 50%;
 }
 
 .mark[data-filled] {
