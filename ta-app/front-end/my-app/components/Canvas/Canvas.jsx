@@ -44,7 +44,9 @@ const ROOM_NAMES_LOCATIONS = {
 
 export const Canvas = () => {
   const dispatch = useDispatch();
-  const backend = useSelector((state) => state.data.backend);
+  const backendTasks = useSelector(
+    (state) => state.data.backend.tasksLocations
+  );
   const canvasLayout = useSelector((state) => state.data.frontend.canvasLayout);
   const isPlaying = useSelector((state) => state.data.frontend.isPlaying);
   const maxAllowedTime = useSelector(
@@ -155,6 +157,7 @@ export const Canvas = () => {
 
   const [currentTime, setCurrentTime] = useState(0);
   const [ids, setIds] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const newIds = robotsPaths.map((robotPath, robotIndex) => {
@@ -181,6 +184,29 @@ export const Canvas = () => {
       setIds(newIds);
     }
   }, [currentTime, robotsPaths]);
+
+  useEffect(() => {
+    console.log(backendTasks);
+
+    if (backendTasks) {
+      const newTasksArray = Object.values(backendTasks);
+
+      // console.log(DEFAULT_POSITIONS[`${newTasksArray[0].pickUpRoom}`].y)
+      const newTasks = newTasksArray.map((task) => (
+        <ID
+          key={`${task.id}-${task.pickUpRoom}`}
+          id={`${task.id}`}
+          mode="task"
+          location="grid"
+          top={DEFAULT_POSITIONS[`${task.pickUpRoom}`].y}
+          left={DEFAULT_POSITIONS[`${task.pickUpRoom}`].x}
+          remove={currentTime >= task.pickUpTime}
+        />
+      ));
+
+      setTasks(newTasks);
+    }
+  }, [currentTime, backendTasks]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -246,6 +272,8 @@ export const Canvas = () => {
           {roomNames}
 
           {ids}
+
+          {tasks}
         </div>
       </div>
 

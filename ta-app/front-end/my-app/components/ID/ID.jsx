@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 import { useSpring, animated } from "@react-spring/web";
 import React, { useState, useEffect } from "react";
 
-export const ID = ({ id, mode, location, top, left }) => {
+export const ID = ({ id, mode, location, top, left, remove }) => {
+  // if (mode === "task") {
+  //   console.log("top: ", top);
+  //   console.log("left: ", left);
+  // }
+
   let additionalClass = "";
   let textStyle = "";
 
@@ -24,7 +29,7 @@ export const ID = ({ id, mode, location, top, left }) => {
 
   const className = `${classes.id} ${
     mode === "robot" ? classes.robot : classes.task
-  } ${additionalClass}`;
+  } ${remove ? classes.remove : ""} ${additionalClass}`;
 
   return (
     <div
