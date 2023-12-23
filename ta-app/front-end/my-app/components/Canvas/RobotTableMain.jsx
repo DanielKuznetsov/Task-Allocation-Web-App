@@ -16,37 +16,52 @@ const RobotTableMain = () => {
 
   useEffect(() => {
     const newStatusMap = {};
-    robots.forEach(robot => {
-      newStatusMap[robot.id] = timeline[`${currentTimeStep}`]?.robotsLocations[`${robot.id}`]?.status || "N/A";
+    robots.forEach((robot) => {
+      if (timeline) {
+        newStatusMap[robot.id] =
+          timeline[`${currentTimeStep}`]?.robotsLocations[`${robot.id}`]
+            ?.status || "en route";
+      }
     });
     setStatusMap(newStatusMap);
   }, [currentTimeStep, robots, timeline]);
 
-  const rows = robots.length > 0 ? (
-    robots.map((robot, idx) => (
-      <Table.Tr style={{ borderBottom: "1px solid #efefef" }} key={robot.id}>
-        <Table.Td>{robot.id}</Table.Td>
-        <Table.Td>Room {robot.startRoom}</Table.Td>
-        <Table.Td>{statusMap[robot.id]}</Table.Td>
-        <Table.Td>
-          {whoCarriesWhat &&
-            whoCarriesWhat[idx]?.length > 0 &&
-            whoCarriesWhat[idx].map((id, index) => (
-              <span key={index}>
-                T{id}
-                {index < whoCarriesWhat[idx].length - 1 ? ", " : ""}
-              </span>
-            ))}
+  const updateCurrentRoom = (robotID) => {
+    if (timeline) {
+      const currentRoom =
+        timeline[`${currentTimeStep}`]["robotsLocations"][`${robotID}`].room;
+
+      return currentRoom === 0 ? "In the hallway" : `Room ${currentRoom}`;
+    }
+    return "Unknown";
+  };
+
+  const rows =
+    robots.length > 0 ? (
+      robots.map((robot, idx) => (
+        <Table.Tr style={{ borderBottom: "1px solid #efefef" }} key={robot.id}>
+          <Table.Td>{robot.id}</Table.Td>
+          <Table.Td>{updateCurrentRoom(robot.id)}</Table.Td>
+          <Table.Td style={{ width: "100px" }}>{statusMap[robot.id]}</Table.Td>
+          <Table.Td>
+            {whoCarriesWhat &&
+              whoCarriesWhat[idx]?.length > 0 &&
+              whoCarriesWhat[idx].map((id, index) => (
+                <span key={index}>
+                  T{id}
+                  {index < whoCarriesWhat[idx].length - 1 ? ", " : ""}
+                </span>
+              ))}
+          </Table.Td>
+        </Table.Tr>
+      ))
+    ) : (
+      <Table.Tr style={{ height: "99px" }}>
+        <Table.Td colSpan={4} style={{ textAlign: "center" }}>
+          No data available.
         </Table.Td>
       </Table.Tr>
-    ))
-  ) : (
-    <Table.Tr style={{ height: "99px" }}>
-      <Table.Td colSpan={4} style={{ textAlign: "center" }}>
-        No data available.
-      </Table.Td>
-    </Table.Tr>
-  );
+    );
 
   return (
     <ScrollArea h={134} type="never">
@@ -54,7 +69,7 @@ const RobotTableMain = () => {
         <Table.Thead>
           <Table.Tr>
             <Table.Th style={{ width: "50px" }}>ID</Table.Th>
-            <Table.Th>Starting position</Table.Th>
+            <Table.Th>Current Location</Table.Th>
             <Table.Th>Status</Table.Th>
             <Table.Th>Tasks Carrying</Table.Th>
           </Table.Tr>

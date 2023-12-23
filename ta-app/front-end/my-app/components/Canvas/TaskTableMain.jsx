@@ -1,8 +1,52 @@
-import { Table, ScrollArea, Text } from "@mantine/core";
+import { Table, ScrollArea } from "@mantine/core";
+import { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 
 const TaskTableMain = () => {
   const tasks = useSelector((state) => state.data.frontend.addedTasks);
+  const backendTasks = useSelector(
+    (state) => state.data.backend.tasksLocations
+  );
+  const currentTimeStep = useSelector(
+    (state) => state.data.frontend.currentTimeStep
+  );
+
+  const statusMap = useMemo(() => {
+    const newStatusMap = {};
+
+    if (currentTimeStep === 0) {
+      tasks.forEach((task) => {
+        newStatusMap[task.id] = "idle";
+      });
+      return newStatusMap;
+    }
+
+    if (backendTasks) {
+      tasks.forEach((task) => {
+        const taskDetails = backendTasks[`${task.id}`];
+        if (!taskDetails) {
+          newStatusMap[task.id] = "N/A";
+          return;
+        }
+
+        if (currentTimeStep === taskDetails.pickUpTime) {
+          newStatusMap[task.id] = "picked up";
+        } else if (currentTimeStep === taskDetails.dropOffTime) {
+          newStatusMap[task.id] = "completed";
+        } else if (
+          currentTimeStep > taskDetails.pickUpTime &&
+          currentTimeStep < taskDetails.dropOffTime
+        ) {
+          newStatusMap[task.id] = "in transit";
+        } else if (currentTimeStep < taskDetails.pickUpTime) {
+          newStatusMap[task.id] = "idle";
+        } else {
+          newStatusMap[task.id] = "completed";
+        }
+      });
+    }
+    return newStatusMap;
+  }, [currentTimeStep, tasks, backendTasks]);
 
   const rows =
     tasks.length > 0 ? (
@@ -11,7 +55,7 @@ const TaskTableMain = () => {
           <Table.Td>{task.id}</Table.Td>
           <Table.Td>Room {task.startRoom}</Table.Td>
           <Table.Td>Room {task.finalRoom}</Table.Td>
-          <Table.Td>N/A</Table.Td>
+          <Table.Td style={{ width: "100px" }}>{statusMap[task.id]}</Table.Td>
         </Table.Tr>
       ))
     ) : (
@@ -23,22 +67,19 @@ const TaskTableMain = () => {
     );
 
   return (
-    <>
-      <ScrollArea h={163} type="never">
-        <Table striped highlightOnHover withColumnBorders stickyHeader>
-          {/* Table Header and Body */}
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th style={{ width: "50px" }}>ID</Table.Th>
-              <Table.Th>Starting position</Table.Th>
-              <Table.Th>Final position</Table.Th>
-              <Table.Th>Status</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
-      </ScrollArea>
-    </>
+    <ScrollArea h={163} type="never">
+      <Table striped highlightOnHover withColumnBorders stickyHeader>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th style={{ width: "50px" }}>ID</Table.Th>
+            <Table.Th>Starting Location</Table.Th>
+            <Table.Th>Final Location</Table.Th>
+            <Table.Th>Status</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+    </ScrollArea>
   );
 };
 
