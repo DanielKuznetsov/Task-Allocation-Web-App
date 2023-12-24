@@ -3,10 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import classes from "./Canvas.module.css";
 import { Cell } from "../Cell/Cell";
 import { ID } from "../ID/ID";
+import { TaskID } from "../ID/TaskID";
 import findPath from "./pathfinding";
 import {
   setIsPlaying,
   setCurrentTimeStep,
+  setIncreasing,
+  setDecreasing,
 } from "../../features/data/dataSlice";
 import typography from "../../design-system/typography.module.css";
 import { Text } from "@mantine/core";
@@ -21,7 +24,8 @@ import {
 } from "@radix-ui/react-icons";
 import TaskTableMain from "./TaskTableMain";
 import RobotTableMain from "./RobotTableMain";
-import toast, { Toast } from "react-hot-toast";
+import toast from "react-hot-toast";
+import { usePrevious } from "@mantine/hooks";
 
 const DEFAULT_POSITIONS = {
   1: { x: 3, y: 3 },
@@ -159,6 +163,24 @@ export const Canvas = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [ids, setIds] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const previousValue = usePrevious(currentTime);
+
+  useEffect(() => {
+    console.log("currentTime: ", currentTime);
+    console.log("previousValue: ", previousValue);
+
+    if (previousValue < currentTime) {
+      console.log("INCREASING")
+      dispatch(setIncreasing(true));
+      dispatch(setDecreasing(false));
+    }
+
+    if (previousValue > currentTime) {
+      console.log("DECREASING")
+      dispatch(setDecreasing(true));
+      dispatch(setIncreasing(false));
+    }
+  }, [currentTime]);
 
   useEffect(() => {
     const newIds = robotsPaths.map((robotPath, robotIndex) => {
@@ -173,6 +195,9 @@ export const Canvas = () => {
                 location="grid"
                 top={path[1]}
                 left={path[0]}
+                currentTimeStep={timeStep}
+                robotsPath={robotPath}
+                // prevTopLeft={{y:robotPath[timeStep-1],x:3}}
               />
             );
           }
@@ -187,14 +212,14 @@ export const Canvas = () => {
   }, [currentTime, robotsPaths]);
 
   useEffect(() => {
-    console.log(backendTasks);
+    // console.log(backendTasks);
 
     if (backendTasks) {
       const newTasksArray = Object.values(backendTasks);
 
       // console.log(DEFAULT_POSITIONS[`${newTasksArray[0].pickUpRoom}`].y)
       const newTasks = newTasksArray.map((task) => (
-        <ID
+        <TaskID
           key={`${task.id}-${task.pickUpRoom}`}
           id={`${task.id}`}
           mode="task"

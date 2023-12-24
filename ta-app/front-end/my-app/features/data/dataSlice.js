@@ -48,6 +48,8 @@ const initialState = {
   frontend: {
     ids: [],
     isLoading: false,
+    increasing: true,
+    decreasing: false,
     isSolved: true,
     isPlaying: false,
     robotsPath: [],
@@ -237,6 +239,12 @@ const dataSlice = createSlice({
     addTask: (state, action) => {
       state.frontend.addedTasks.push(action.payload);
     },
+    setIncreasing: (state, action) => {
+      state.frontend.increasing = action.payload;
+    },
+    setDecreasing: (state, action) => {
+      state.frontend.decreasing = action.payload;
+    },
     setNewIds: (state, action) => {
       state.frontend.ids = action.payload;
     },
@@ -278,6 +286,8 @@ export const getCurrentTime = (state) => state.data.frontend.currentTimeStep;
 
 export const {
   addTask,
+  setIncreasing,
+  setDecreasing,
   removeTask,
   addRobot,
   removeRobot,
