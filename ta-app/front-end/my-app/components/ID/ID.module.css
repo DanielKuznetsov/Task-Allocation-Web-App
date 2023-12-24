@@ -31,3 +31,16 @@
 .remove {
   opacity: 0;
 }
+
+@keyframes moveAnimation {
+  from {
+    transform: translate(var(--prevLeft), var(--prevTop));
+  }
+  to {
+    transform: translate(var(--currentLeft), var(--currentTop));
+  }
+}
+
+.moving {
+  animation: moveAnimation 0.5s ease-in-out forwards;
+}
