@@ -1,4 +1,4 @@
-import { Button } from "../components/Button/Button.jsx";
+import { Button } from "../components/Button/MantineButton.jsx";
 import { action } from "@storybook/addon-actions";
 
 export default {

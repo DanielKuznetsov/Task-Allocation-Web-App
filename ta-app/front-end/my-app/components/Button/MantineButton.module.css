@@ -1,0 +1,40 @@
+/* FILLED */
+.rootFilled {
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
+  background-color: rgb(82, 82, 82);
+  border-color: rgb(82, 82, 82);
+  border-width: 1px;
+  border-radius: 15px;
+  height: 40px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rootFilled:hover {
+  background-color: rgb(102, 102, 102);
+  border-color: rgb(102, 102, 102);
+}
+
+.labelFilled,
+.labelOutlined {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* OUTLINED */
+.rootOutlined {
+  height: 40px;
+  font-size: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+  border-width: 1px;
+  border-radius: 15px;
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+}
+
+.rootOutlined:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}

@@ -5,9 +5,11 @@ import { SolverModal } from "../SolverModal/SolverModal.jsx";
 import classes from "./Navbar.module.css";
 import Logo from "../../public/icons/logo.svg";
 import Link from "next/link.js";
+import { MantineButton } from "../Button/MantineButton.jsx";
 
 export const Navbar = () => {
-  const [isModalOpen, { open: openModal, close: closeModal }] = useDisclosure(false);
+  const [isModalOpen, { open: openModal, close: closeModal }] =
+    useDisclosure(false);
 
   return (
     <>
@@ -27,12 +29,14 @@ export const Navbar = () => {
 
           <div className={classes.buttons}>
             {/* Button linking to the paper page */}
-            <Button variant="outline">Read Paper</Button>
+            <MantineButton variant="outline" context="Read Paper" />
 
             {/* Button to open the solver modal */}
-            <Button variant="filled" onClick={openModal}>
-              Start Solver
-            </Button>
+            <MantineButton
+              variant="filled"
+              context="Get Started"
+              onClick={openModal}
+            />
           </div>
         </div>
       </nav>
