@@ -11,6 +11,12 @@
   justify-content: space-between;
 }
 
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .links {
   display: flex;
   align-items: center;

@@ -14,6 +14,10 @@ export const MantineButton = ({ variant, context, onClick, icon }) => {
     intro: {
       root: classes.rootIntro,
       label: classes.labelIntro,
+    },
+    abstract: {
+      root: classes.rootAbstract,
+      label: classes.labelAbstract,
     }
   };
 

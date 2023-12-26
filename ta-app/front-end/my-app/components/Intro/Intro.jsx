@@ -14,12 +14,12 @@ export const Intro = () => {
         <div className={classes.info}>
           <h1 className={classes.title}>
             Towards efficient and scalable
-            <span className={classes.titleTA}> task allocation.</span>
+            <span className={classes.titleTA}> multi-agent systems.</span>
           </h1>
 
           <h2 className={classes.subtitle}>
             <span className={classes.subtitleTA}>
-              A SAT-based approach to task distribution in multi-agent systems.
+              A SAT-based approach for task allocation in warehouse settings.
             </span>
 
             <span className={classes.subtitleTA}>
@@ -29,9 +29,10 @@ export const Intro = () => {
         </div>
 
         <div className={classes.buttons}>
+          {/* This should scroll down the page to the demo screen and open the demo screen modal */}
           <MantineButton
             variant="intro"
-            context="Get Started"
+            context="Watch Interactive Demo"
             onClick={openModal}
             icon={<ArrowRightIcon width="20" height="20" />}
           />

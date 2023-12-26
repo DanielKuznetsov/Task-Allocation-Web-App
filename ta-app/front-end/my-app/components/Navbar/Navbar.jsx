@@ -21,7 +21,7 @@ export const Navbar = () => {
 
           <div className={classes.links}>
             {/* Must remember IDs used */}
-            <NavLink href="#sectionName" context="Abstract" />
+            <NavLink href="#abstract" context="Abstract" />
             <NavLink href="#sectionName" context="Approach" />
             <NavLink href="#sectionName" context="Results" />
             <NavLink href="#sectionName" context="Blog" />

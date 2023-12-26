@@ -1,6 +1,7 @@
 /* FILLED */
 .rootFilled,
-.rootIntro {
+.rootIntro,
+.rootAbstract {
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
   background-color: rgb(82, 82, 82);
   border-color: rgb(82, 82, 82);
@@ -11,6 +12,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding-left: 15px;
   padding-right: 15px;
+  width: fit-content;
 }
 
 .rootFilled:hover {
@@ -19,7 +21,8 @@
 }
 
 .labelFilled,
-.labelOutlined {
+.labelOutlined,
+.labelAbstract {
   font-size: 0.9375rem;
   font-weight: 500;
 }
@@ -55,20 +58,39 @@
   padding-right: 20px;
   height: 50px;
   animation: shadowAnimation 3s infinite alternate;
-
 }
 
 @keyframes shadowAnimation {
-  0%, 100% {
-    box-shadow: 0 0 1rem 2px rgba(102, 153, 255, 1); 
+  0%,
+  100% {
+    box-shadow: 0 0 1rem 2px rgba(102, 153, 255, 1);
   }
   25% {
-    box-shadow: 0 0 1rem 2px rgba(255, 153, 204, 1); 
+    box-shadow: 0 0 1rem 2px rgba(255, 153, 204, 1);
   }
   50% {
-    box-shadow: 0 0 1rem 2px rgba(153, 204, 255, 1); 
+    box-shadow: 0 0 1rem 2px rgba(153, 204, 255, 1);
   }
   75% {
     box-shadow: 0 0 1rem 2px rgba(204, 255, 153, 1);
   }
+}
+
+/* ABSTRACT */
+.rootAbstract {
+  padding-left: 13px;
+  padding-right: 13px;
+  border-color: rgb(56, 189, 248);
+  background-color: transparent;
+  background-image: none;
+  color: rgb(56, 189, 248);
+  box-shadow: none;
+}
+
+.rootAbstract:hover {
+  box-shadow: 0px 2px 10px 0 rgba(56, 189, 248, 0.4);
+}
+
+.labelAbstract {
+  color: rgb(14, 165, 233);
 }
