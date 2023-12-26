@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { useDisclosure } from "@mantine/hooks";
-import { Button } from "@mantine/core";
 import { SolverModal } from "../SolverModal/SolverModal.jsx";
 import classes from "./Navbar.module.css";
 import Logo from "../../public/icons/logo.svg";
-import Link from "next/link.js";
 import { MantineButton } from "../Button/MantineButton.jsx";
+import { NavLink } from "../NavLink/NavLink.jsx";
 
 export const Navbar = () => {
   const [isModalOpen, { open: openModal, close: closeModal }] =
@@ -22,9 +21,10 @@ export const Navbar = () => {
 
           <div className={classes.links}>
             {/* Must remember IDs used */}
-            <Link href="#sectionName">Abstract</Link>
-            <Link href="#sectionName">Approach</Link>
-            <Link href="#sectionName">Results</Link>
+            <NavLink href="#sectionName" context="Abstract" />
+            <NavLink href="#sectionName" context="Approach" />
+            <NavLink href="#sectionName" context="Results" />
+            <NavLink href="#sectionName" context="Blog" />
           </div>
 
           <div className={classes.buttons}>
