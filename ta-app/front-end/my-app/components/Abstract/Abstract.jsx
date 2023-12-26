@@ -2,8 +2,9 @@ import classes from "./Abstract.module.css";
 import { useToggle } from "@mantine/hooks";
 import { ActionIcon, Tooltip, Text } from "@mantine/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MantineButton } from "../Button/MantineButton";
+import { useScrollIntoView } from "@mantine/hooks";
 
 export const Abstract = () => {
   const [value, toggle] = useToggle();
@@ -11,13 +12,19 @@ export const Abstract = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [textContent, setTextContent] = useState("");
 
+  const ref = useRef();
+
+  const { scrollIntoView, targetRef } = useScrollIntoView({
+    offset: 60,
+  });
+
   useEffect(() => {
     setIsVisible(false);
 
     const timeoutId = setTimeout(() => {
       setTextContent(
         value ? (
-          <p>
+          <span>
             <span style={{ color: "rgba(0,0,0,.75" }}>Shortened Version:</span>{" "}
             We explore the Multi-Robot Task Allocation (MRTA) problem in a
             warehouse setting with pick-up/drop-off tasks using a Boolean
@@ -29,10 +36,10 @@ export const Abstract = () => {
             Future work will explore larger fleets, longer time horizons, and
             problem size scaling to better evaluate this approach's
             effectiveness.
-          </p>
+          </span>
         ) : (
-          <p>
-            <span style={{ color: "rgba(0,0,0,.75" }}>Complete Version:</span>{" "}
+          <span>
+            <span style={{ color: "rgba(0,0,0,.75" }}>Full Version:</span>{" "}
             Multi-agent systems, composed of distinct entities/agents
             co-existing in a shared environment, arise in many applications
             including autonomous vehicles and ware- house robotics. In this
@@ -55,7 +62,7 @@ export const Abstract = () => {
             possible for applica- tion in real-world warehouse settings. Future
             work will explore larger fleets, longer time horizons, and problem
             size scaling to better evaluate this approach's effectiveness.
-          </p>
+          </span>
         )
       );
 
@@ -67,6 +74,7 @@ export const Abstract = () => {
 
   const handleClamp = () => {
     setClamped(clamped === 3 ? 100 : 3);
+    scrollIntoView({ alignment: "center", ref });
   };
 
   return (
@@ -76,12 +84,12 @@ export const Abstract = () => {
           <h1 className={classes.heading}>Abstract</h1>
           <Tooltip
             multiline
-            w={145}
+            w={130}
             withArrow
             transitionProps={{ duration: 200 }}
             label={
               value
-                ? "Click to view the complete abstract."
+                ? "Click to view the full abstract."
                 : "Click to view the short version."
             }
             onClick={toggle}
@@ -102,6 +110,7 @@ export const Abstract = () => {
         </div>
 
         <Text
+          ref={targetRef}
           lineClamp={clamped}
           className={`${classes.abstract} ${
             !isVisible && classes.abstractHidden
