@@ -24,8 +24,8 @@ export const Abstract = () => {
     const timeoutId = setTimeout(() => {
       setTextContent(
         value ? (
-          <span>
-            <span style={{ color: "rgba(0,0,0,.75" }}>Shortened Version:</span>{" "}
+          <span className={classes.mainContent}>
+            <span style={{ color: "rgba(0,0,0,.75", fontWeight: "500" }}>Short Version:</span>{" "}
             We explore the Multi-Robot Task Allocation (MRTA) problem in a
             warehouse setting with pick-up/drop-off tasks using a Boolean
             Satisfiability (SAT) problem model. We use the PySAT toolkit with
@@ -38,8 +38,8 @@ export const Abstract = () => {
             effectiveness.
           </span>
         ) : (
-          <span>
-            <span style={{ color: "rgba(0,0,0,.75" }}>Full Version:</span>{" "}
+          <span className={classes.mainContent}>
+            <span style={{ color: "rgba(0,0,0,.75", fontWeight: "500" }}>Full Version:</span>{" "}
             Multi-agent systems, composed of distinct entities/agents
             co-existing in a shared environment, arise in many applications
             including autonomous vehicles and ware- house robotics. In this

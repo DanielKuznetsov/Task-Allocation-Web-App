@@ -1,0 +1,62 @@
+.container {
+  max-width: 71.25rem;
+  margin: 0 auto;
+  padding-bottom: 6.25rem;
+}
+
+.motivationWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headingWrapper {
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.context {
+  justify-self: flex-end;
+  text-align: left;
+  max-width: 55%;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  font-weight: 400;
+  color: rgb(153, 153, 153);
+  /* color: rgb(86, 100, 126); */
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.card {
+  background-color: rgba(0, 0, 0, 0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  padding: 1.75rem 2rem
+}
+
+.card:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  scale: 1.05;
+}
+
+.cardHeading {
+  margin-top: 1.25rem;
+  margin-bottom: 0.25rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.cardText {
+  color: rgb(125, 124, 124);
+  line-height: 1.5;
+}

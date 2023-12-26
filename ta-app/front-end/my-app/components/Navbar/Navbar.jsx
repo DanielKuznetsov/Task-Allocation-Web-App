@@ -22,14 +22,16 @@ export const Navbar = () => {
           <div className={classes.links}>
             {/* Must remember IDs used */}
             <NavLink href="#abstract" context="Abstract" />
+            <NavLink href="#sectionName" context="Motivation" />
+            <NavLink href="#sectionName" context="What is SAT?" />
             <NavLink href="#sectionName" context="Approach" />
             <NavLink href="#sectionName" context="Results" />
-            <NavLink href="#sectionName" context="Blog" />
+            {/* <NavLink href="#sectionName" context="Blog" /> */}
           </div>
 
           <div className={classes.buttons}>
             {/* Button linking to the paper page */}
-            <MantineButton variant="outline" context="Read Paper" />
+            {/* <MantineButton variant="outline" context="Read Paper" /> */}
 
             {/* Button to open the solver modal */}
             <MantineButton

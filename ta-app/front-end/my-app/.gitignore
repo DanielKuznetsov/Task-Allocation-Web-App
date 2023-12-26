@@ -8,7 +8,7 @@
 .storybook
 jsconfig.json
 next.config.js
-package-lock.json
+# package-lock.json
 postcss.config.cjs
 README.md
 # testing

@@ -44,7 +44,7 @@
 .abstract {
   font-size: 1.125rem;
   line-height: 1.75;
-  font-weight: 500;
+  font-weight: 400;
   color: rgb(153, 153, 153);
   opacity: 1;
   transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
