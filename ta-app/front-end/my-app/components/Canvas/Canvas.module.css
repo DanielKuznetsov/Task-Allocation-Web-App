@@ -3,7 +3,8 @@
   align-items: center;
   justify-content: space-between;
   max-width: 71.25rem;
-  margin: 10rem auto;
+  
+  /* margin: 10rem auto; */
 }
 
 .timerContainer {

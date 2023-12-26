@@ -166,17 +166,17 @@ export const Canvas = () => {
   const previousValue = usePrevious(currentTime);
 
   useEffect(() => {
-    console.log("currentTime: ", currentTime);
-    console.log("previousValue: ", previousValue);
+    // console.log("currentTime: ", currentTime);
+    // console.log("previousValue: ", previousValue);
 
     if (previousValue < currentTime) {
-      console.log("INCREASING")
+      // console.log("INCREASING")
       dispatch(setIncreasing(true));
       dispatch(setDecreasing(false));
     }
 
     if (previousValue > currentTime) {
-      console.log("DECREASING")
+      // console.log("DECREASING")
       dispatch(setDecreasing(true));
       dispatch(setIncreasing(false));
     }
