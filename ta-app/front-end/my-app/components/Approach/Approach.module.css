@@ -1,0 +1,128 @@
+.container {
+  max-width: 71.25rem;
+  margin: 0 auto;
+  padding-bottom: 6.25rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: rgba(0, 0, 0, 0.75);
+  text-align: center;
+}
+
+.content {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 25rem 1fr;
+  margin-top: 2.5rem;
+}
+
+.sidebar {
+  /* background-color: antiquewhite; */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  border-radius: 15px;
+  padding: 0.85rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: #f5f3ed;
+}
+
+.number {
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.75);
+  font-weight: 500;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 8px;
+  background-color: rgb(233, 228, 216);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  color: rgba(0, 0, 0, 0.75);
+  line-height: 2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover .cardTitle {
+  color: #c44b25;
+}
+
+.hover {
+  background-color: #f5f3ed;
+}
+
+.hover .cardTitle {
+  color: #c44b25;
+}
+
+.desc {
+  font-size: 0.875rem;
+  color: rgb(125, 124, 124);
+}
+
+.infoWrapper {
+  /* background-color: rgba(154, 205, 50, 0.25); */
+  padding: 0.85rem;
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.infoCardTitle {
+  margin-bottom: 0.5rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.formula {
+  margin-bottom: 1.25rem;
+}
+
+.infoCardDesc {
+  color: rgb(113, 112, 112);
+  line-height: 1.5;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.envImage {
+  width: 400px;
+  height: auto;
+}
+
+.imageLabel {
+  font-size: 0.7rem;
+  display: block;
+  color: rgb(113, 112, 112);
+}
