@@ -2,13 +2,20 @@ import classes from "./Approach.module.css";
 import { Text, List } from "@mantine/core";
 import Image from "next/image";
 import env from "../../public/env.png";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useScrollIntoView } from "@mantine/hooks";
 
 export const Approach = () => {
   const [selectedCard, setSelectedCard] = useState("bool");
+  const ref = useRef();
+
+  const { scrollIntoView, targetRef } = useScrollIntoView({
+    offset: 60,
+  });
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
+    scrollIntoView({ alignment: "center", ref });
   };
 
   return (
@@ -73,7 +80,7 @@ export const Approach = () => {
         </div>
 
         {selectedCard === "bool" && (
-          <div id="bool" className={classes.infoWrapper}>
+          <div ref={targetRef} id="bool" className={classes.infoWrapper}>
             <div className={classes.infoCard}>
               <div className="section">
                 <h3 className={classes.infoCardTitle}>
@@ -189,7 +196,7 @@ export const Approach = () => {
         )}
 
         {selectedCard === "env" && (
-          <div id="env" className={classes.infoWrapper}>
+          <div ref={targetRef} id="env" className={classes.infoWrapper}>
             <div className={classes.infoCard}>
               <div className="section">
                 <h3 className={classes.infoCardTitle}>Environment</h3>
@@ -228,7 +235,7 @@ export const Approach = () => {
         )}
 
         {selectedCard === "exp" && (
-          <div id="exp" className={classes.infoWrapper}>
+          <div ref={targetRef} id="exp" className={classes.infoWrapper}>
             <div className={classes.infoCard}>
               <div className="section">
                 <h3 className={classes.infoCardTitle}>SAT-solver employed</h3>
