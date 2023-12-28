@@ -7,12 +7,25 @@ import { MantineButton } from "../Button/MantineButton.jsx";
 import { NavLink } from "../NavLink/NavLink.jsx";
 import Link from "next/link.js";
 import { usePathname } from "next/navigation.js";
+import scrollIntoView from "scroll-into-view-if-needed";
 
 export const Navbar = () => {
   const [isModalOpen, { open: openModal, close: closeModal }] =
     useDisclosure(false);
 
   const path = usePathname();
+
+  const scrollToSection = (sectionId) => {
+    return () => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        scrollIntoView(section, {
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    };
+  };
 
   return (
     <>
@@ -25,26 +38,31 @@ export const Navbar = () => {
           </div>
 
           <div className={classes.links}>
-            {/* Must remember IDs used */}
             {path === "/" ? (
               <>
-                <NavLink href="#abstract" context="Abstract" />
-                <NavLink href="#motivation" context="Motivation" />
-                <NavLink href="#approach" context="Approach" />
-                <NavLink href="#sectionName" context="Results" />
-                <NavLink href="#sectionName" context="Read Paper" />
+                <NavLink
+                  context="Abstract"
+                  onClick={scrollToSection("abstract")}
+                />
+                <NavLink
+                  context="Motivation"
+                  onClick={scrollToSection("motivation")}
+                />
+                <NavLink
+                  context="Approach"
+                  onClick={scrollToSection("approach")}
+                />
+                <NavLink context="Results" />
+                <NavLink context="Read Paper" />
               </>
             ) : (
               ""
             )}
-            {/* <NavLink href="#sectionName" context="Blog" /> */}
           </div>
 
           <div className={classes.buttons}>
-            {/* Button linking to the paper page */}
             {/* <MantineButton variant="outline" context="Read Paper" /> */}
 
-            {/* Button to open the solver modal */}
             <Link href="/demo">
               <MantineButton
                 variant="filled"
@@ -56,7 +74,6 @@ export const Navbar = () => {
         </div>
       </nav>
 
-      {/* Solver Modal */}
       <SolverModal opened={isModalOpen} close={closeModal} />
     </>
   );

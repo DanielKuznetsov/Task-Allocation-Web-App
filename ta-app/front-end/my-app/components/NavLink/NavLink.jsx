@@ -1,12 +1,10 @@
 import classes from "./NavLink.module.css";
 import Link from "next/link";
 
-export const NavLink = ({ href, context }) => {
+export const NavLink = ({ context, onClick }) => {
   return (
-    <Link href={href}>
-      <div className={classes.link}>
-        <span>{context}</span>
-      </div>
-    </Link>
+    <div className={classes.link} onClick={onClick}>
+      <span>{context}</span>
+    </div>
   );
 };
