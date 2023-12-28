@@ -1,24 +1,30 @@
 import classes from "./Intro.module.css";
 import { MantineButton } from "../Button/MantineButton";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { SolverModal } from "../SolverModal/SolverModal.jsx";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 
 export const Intro = () => {
-  const [isModalOpen, { open: openModal, close: closeModal }] =
-    useDisclosure(false);
-
-  const titleRef = useRef(null);
   const [passedTitle, setPassedTitle] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
+  const { height, width } = useViewportSize();
+  const titleRef = useRef(null);
+
+  console.log(height);
+
+  useEffect(() => {
+    if (height > 990) {
+      setPassedTitle(true);
+    }
+  }, [height])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) {
           setPassedTitle(true);
-          // Perform any action here
         } else {
           setPassedTitle(false);
         }
@@ -36,8 +42,6 @@ export const Intro = () => {
       }
     };
   }, [titleRef]);
-
-  const [showOverlay, setShowOverlay] = useState(true);
 
   useEffect(() => {
     let timeoutId;
