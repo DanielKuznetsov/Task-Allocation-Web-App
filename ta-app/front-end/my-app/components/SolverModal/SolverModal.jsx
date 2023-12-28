@@ -125,6 +125,9 @@ export const SolverModal = ({ opened, close }) => {
 
     if (file) {
       processFile(file);
+    } else {
+      dispatch(clearAllTasks());
+      dispatch(clearAllRobots());
     }
   }, [file, dispatch]);
 

@@ -1,5 +1,6 @@
 import { Button } from "@mantine/core";
 import toast from "react-hot-toast";
+import { MantineButton } from "../Button/MantineButton";
 
 const SolveButton = ({ isLoading, file, solveClicked }) => {
   const handleClick = () => {
@@ -11,9 +12,7 @@ const SolveButton = ({ isLoading, file, solveClicked }) => {
   };
 
   return (
-    <Button disabled={isLoading} onClick={handleClick}>
-      Solve Problem
-    </Button>
+    <MantineButton variant="filled" context="Solve Problem" disabled={isLoading} onClick={handleClick} />
   );
 };
 

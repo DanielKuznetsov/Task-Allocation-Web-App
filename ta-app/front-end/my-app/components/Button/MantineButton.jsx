@@ -1,7 +1,7 @@
 import classes from "./MantineButton.module.css";
 import { Button } from "@mantine/core";
 
-export const MantineButton = ({ variant, context, onClick, icon }) => {
+export const MantineButton = ({ variant, context, onClick, icon, disabled }) => {
   const variantClasses = {
     filled: {
       root: classes.rootFilled,
@@ -30,6 +30,7 @@ export const MantineButton = ({ variant, context, onClick, icon }) => {
         root: rootClassName,
         label: labelClassName,
       }}
+      disabled={disabled}
       variant={variant}
       onClick={onClick}
       leftSection={icon ? icon : null}

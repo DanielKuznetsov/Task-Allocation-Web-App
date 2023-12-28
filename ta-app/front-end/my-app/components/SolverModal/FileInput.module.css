@@ -1,0 +1,33 @@
+/* OUTLINED */
+.inputOutlined {
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 40px;
+  width: 11.5625rem;
+  font-size: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+  border-width: 1px;
+  border-radius: 15px;
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+}
+
+.inputOutlined:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.inputOutlined::placeholder {
+    font-size: .75rem;
+}
+
+.rootOutlined:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.labelOutlined {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
