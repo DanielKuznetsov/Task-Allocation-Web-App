@@ -10,11 +10,6 @@ export const Intro = () => {
   const titleRef = useRef(null);
 
   useLayoutEffect(() => {
-    setPassedTitle(window.innerHeight > 990);
-    console.log(window.innerHeight);
-  }, []);
-
-  useLayoutEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) {
@@ -41,14 +36,12 @@ export const Intro = () => {
     let timeoutId;
 
     if (passedTitle) {
-      // setShowOverlay(true);
       timeoutId = setTimeout(() => {
         setShowOverlay(false);
       }, 300);
     }
 
     if (!passedTitle) {
-      // setShowOverlay(false);
       timeoutId = setTimeout(() => {
         setShowOverlay(true);
       }, 300);
@@ -56,8 +49,6 @@ export const Intro = () => {
 
     return () => clearTimeout(timeoutId);
   }, [passedTitle]);
-
-  console.log("passedTitle: ", passedTitle);
 
   return (
     <>
@@ -141,9 +132,9 @@ export const Intro = () => {
                   title="localhost:3000"
                   frameBorder="0"
                   // loading="lazy"
-                  webkitallowfullscreen
-                  mozallowfullscreen
-                  allowfullscreen
+                  webkitallowfullscreen="true"
+                  mozallowfullscreen="true"
+                  allowFullScreen
                   style={{
                     position: "absolute",
                     top: 0,
