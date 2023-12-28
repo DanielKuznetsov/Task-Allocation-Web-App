@@ -19,7 +19,7 @@ export const Approach = () => {
   };
 
   return (
-    <div className={classes.container}>
+    <div id="approach" className={classes.container}>
       <h2 className={classes.title}>Approach and Experimental Setup</h2>
 
       <div className={classes.content}>

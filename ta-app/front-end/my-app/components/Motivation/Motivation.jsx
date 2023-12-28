@@ -10,7 +10,7 @@ import {
 
 export const Motivation = () => {
   return (
-    <div className={classes.container}>
+    <div id="motivation" className={classes.container}>
       <div className={classes.motivationWrapper}>
         <div className={classes.headingWrapper}>
           <h2 className={classes.heading}>Motivation, Goals,</h2>

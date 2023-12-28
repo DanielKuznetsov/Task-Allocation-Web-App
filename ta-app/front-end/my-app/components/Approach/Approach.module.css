@@ -85,6 +85,7 @@
 .infoWrapper {
   /* background-color: rgba(154, 205, 50, 0.25); */
   padding: 0.85rem;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .infoCard {
@@ -125,4 +126,13 @@
   font-size: 0.7rem;
   display: block;
   color: rgb(113, 112, 112);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

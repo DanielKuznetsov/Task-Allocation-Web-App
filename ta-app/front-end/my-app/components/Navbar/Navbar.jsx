@@ -5,27 +5,38 @@ import classes from "./Navbar.module.css";
 import Logo from "../../public/icons/logo.svg";
 import { MantineButton } from "../Button/MantineButton.jsx";
 import { NavLink } from "../NavLink/NavLink.jsx";
+import Link from "next/link.js";
+import { usePathname } from "next/navigation.js";
 
 export const Navbar = () => {
   const [isModalOpen, { open: openModal, close: closeModal }] =
     useDisclosure(false);
+
+  const path = usePathname();
 
   return (
     <>
       <nav className={classes.nav}>
         <div className={classes.container}>
           <div className={classes.logoWrapper}>
-            {/* Logo with link to main page */}
-            <Image src={Logo} alt="Company Logo" />
+            <Link href="/">
+              <Image src={Logo} alt="Company Logo" />
+            </Link>
           </div>
 
           <div className={classes.links}>
             {/* Must remember IDs used */}
-            <NavLink href="#abstract" context="Abstract" />
-            <NavLink href="#sectionName" context="Motivation" />
-            <NavLink href="#sectionName" context="What is SAT?" />
-            <NavLink href="#sectionName" context="Approach" />
-            <NavLink href="#sectionName" context="Results" />
+            {path === "/" ? (
+              <>
+                <NavLink href="#abstract" context="Abstract" />
+                <NavLink href="#motivation" context="Motivation" />
+                <NavLink href="#approach" context="Approach" />
+                <NavLink href="#sectionName" context="Results" />
+                <NavLink href="#sectionName" context="Read Paper" />
+              </>
+            ) : (
+              ""
+            )}
             {/* <NavLink href="#sectionName" context="Blog" /> */}
           </div>
 
@@ -34,11 +45,13 @@ export const Navbar = () => {
             {/* <MantineButton variant="outline" context="Read Paper" /> */}
 
             {/* Button to open the solver modal */}
-            <MantineButton
-              variant="filled"
-              context="Get Started"
-              onClick={openModal}
-            />
+            <Link href="/demo">
+              <MantineButton
+                variant="filled"
+                context={path === "/demo" ? "Get Started" : "Try Demo"}
+                onClick={path === "/demo" ? openModal : null}
+              />
+            </Link>
           </div>
         </div>
       </nav>
