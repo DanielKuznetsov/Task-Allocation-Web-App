@@ -1,26 +1,20 @@
 import classes from "./Intro.module.css";
 import { MantineButton } from "../Button/MantineButton";
-import { useDisclosure, useViewportSize } from "@mantine/hooks";
-import { SolverModal } from "../SolverModal/SolverModal.jsx";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useLayoutEffect } from "react";
 import Link from "next/link";
 
 export const Intro = () => {
-  const [passedTitle, setPassedTitle] = useState(false);
   const [showOverlay, setShowOverlay] = useState(true);
-  const { height, width } = useViewportSize();
+  const [passedTitle, setPassedTitle] = useState(false);
   const titleRef = useRef(null);
 
-  console.log(height);
+  useLayoutEffect(() => {
+    setPassedTitle(window.innerHeight > 990);
+    console.log(window.innerHeight);
+  }, []);
 
-  useEffect(() => {
-    if (height > 990) {
-      setPassedTitle(true);
-    }
-  }, [height])
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) {
@@ -29,7 +23,7 @@ export const Intro = () => {
           setPassedTitle(false);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0 }
     );
 
     if (titleRef.current) {
@@ -43,18 +37,18 @@ export const Intro = () => {
     };
   }, [titleRef]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let timeoutId;
 
     if (passedTitle) {
-      setShowOverlay(true);
+      // setShowOverlay(true);
       timeoutId = setTimeout(() => {
         setShowOverlay(false);
       }, 300);
     }
 
     if (!passedTitle) {
-      setShowOverlay(false);
+      // setShowOverlay(false);
       timeoutId = setTimeout(() => {
         setShowOverlay(true);
       }, 300);
@@ -62,6 +56,8 @@ export const Intro = () => {
 
     return () => clearTimeout(timeoutId);
   }, [passedTitle]);
+
+  console.log("passedTitle: ", passedTitle);
 
   return (
     <>
@@ -85,7 +81,6 @@ export const Intro = () => {
         </div>
 
         <div className={classes.buttons}>
-          {/* This should scroll down the page to the demo screen and open the demo screen modal */}
           <Link href="/demo">
             <MantineButton
               variant="intro"
@@ -116,11 +111,11 @@ export const Intro = () => {
               }}
             ></div>
           )}
-
           <div
             className={classes.demo}
             style={{
               transform: passedTitle ? "scale(1)" : "scale(1.5)",
+              opacity: passedTitle ? 1 : 0,
             }}
           >
             <div
@@ -149,7 +144,7 @@ export const Intro = () => {
                     top: 0,
                     left: "50%",
                     transform: "translate(-50%, 0)",
-                    width: "100%",
+                    width: "71.25rem",
                     height: "100%",
                     colorScheme: "light",
                   }}
