@@ -8,6 +8,9 @@ import { NavLink } from "../NavLink/NavLink.jsx";
 import Link from "next/link.js";
 import { usePathname } from "next/navigation.js";
 import scrollIntoView from "scroll-into-view-if-needed";
+import { useEffect } from 'react';
+import Swup from 'swup';
+import SwupRouteNamePlugin from '@swup/route-name-plugin';
 
 export const Navbar = () => {
   const [isModalOpen, { open: openModal, close: closeModal }] =

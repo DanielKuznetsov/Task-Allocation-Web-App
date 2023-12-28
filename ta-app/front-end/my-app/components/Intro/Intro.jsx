@@ -3,11 +3,18 @@ import { MantineButton } from "../Button/MantineButton";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { useRef, useEffect, useState, useLayoutEffect } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export const Intro = () => {
   const [showOverlay, setShowOverlay] = useState(true);
   const [passedTitle, setPassedTitle] = useState(false);
   const titleRef = useRef(null);
+
+  const variants = {
+    initial: { opacity: 0, y: 30 }, 
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -30 }, 
+  };
 
   useLayoutEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,24 +61,43 @@ export const Intro = () => {
     <>
       <div className={classes.intro}>
         <div className={classes.info}>
-          <span ref={titleRef} className={classes.emptySpan}></span>
-          <h1 className={classes.title}>
-            <span>Towards efficient and scalable</span>
-            <span className={classes.titleTA}> multi-agent systems.</span>
-          </h1>
+          <div>
+            <span ref={titleRef} className={classes.emptySpan}></span>
+            <motion.h1
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={variants}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className={classes.title}
+            >
+              <span>Towards efficient and scalable</span>
+              <span className={classes.titleTA}> multi-agent systems.</span>
+            </motion.h1>
 
-          <h2 className={classes.subtitle}>
-            <span className={classes.subtitleTA}>
-              A SAT-based approach for task allocation in warehouse settings.
-            </span>
-
-            <span className={classes.subtitleTA}>
-              An encoding technique and its runtime analysis.
-            </span>
-          </h2>
+            <motion.h2 initial="initial"
+            animate="animate"
+            exit="exit" 
+            variants={variants}
+            transition={{ duration: 0.5, delay: 0.2 }}  className={classes.subtitle}>
+              <span className={classes.subtitleTA}>
+                A SAT-based approach for task allocation in warehouse settings.
+              </span>
+              <span className={classes.subtitleTA}>
+                An encoding technique and its runtime analysis.
+              </span>
+            </motion.h2>
+          </div>
         </div>
 
-        <div className={classes.buttons}>
+        <motion.div
+          className={classes.buttons}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={variants}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           <Link href="/demo">
             <MantineButton
               variant="intro"
@@ -79,9 +105,16 @@ export const Intro = () => {
               icon={<ArrowRightIcon width="20" height="20" />}
             />
           </Link>
-        </div>
+        </motion.div>
 
-        <div className={classes.contributors}>
+        <motion.div
+          className={classes.contributors}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={variants}
+          transition={{ duration: 0.5 }}
+        >
           <h6 className={classes.contributorsTitle}>Contributed by</h6>
           <div className={classes.contributorsList}>
             {/* Convert to <Link /> component later */}
@@ -91,7 +124,7 @@ export const Intro = () => {
             <h5 className={classes.contributor}>Sanjit A. Seshia</h5>
             <h5 className={classes.contributor}>S. Shankar Sastry</h5>
           </div>
-        </div>
+        </motion.div>
 
         <div
           className={classes.demoWrapper}

@@ -15,7 +15,7 @@ const Toaster = dynamic(
   }
 );
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps, router }) {
   return (
     <MantineProvider
       theme={{
@@ -26,6 +26,7 @@ export default function App({ Component, pageProps }) {
         <Head>
           <link rel="preconnect" href="https://rsms.me/" />
           <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+          <script src="https://unpkg.com/@swup/route-name-plugin@4"></script>
         </Head>
         <Component {...pageProps} />
         <SpeedInsights />
