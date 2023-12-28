@@ -102,7 +102,12 @@ export const Intro = () => {
           </div>
         </div>
 
-        <div className={classes.demoWrapper}>
+        <div
+          className={classes.demoWrapper}
+          style={{
+            overflow: showOverlay ? "hidden" : "visible",
+          }}
+        >
           {showOverlay && (
             <div
               className={classes.demoOverlay}
@@ -135,7 +140,7 @@ export const Intro = () => {
                   src="https://demo.arcade.software/oIrg1qoT4Yk0clINQmXF?embed"
                   title="localhost:3000"
                   frameBorder="0"
-                  loading="lazy"
+                  // loading="lazy"
                   webkitallowfullscreen
                   mozallowfullscreen
                   allowfullscreen
