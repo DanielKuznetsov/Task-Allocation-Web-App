@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <Navbar />
       <Intro />
-      <Canvas />
+      {/* <Canvas /> */}
       <Abstract />
       <Motivation />
       <Approach />

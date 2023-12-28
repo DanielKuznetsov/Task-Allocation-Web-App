@@ -48,7 +48,7 @@ export const Navbar = () => {
             <Link href="/demo">
               <MantineButton
                 variant="filled"
-                context={path === "/demo" ? "Get Started" : "Try Demo"}
+                context={path === "/demo" ? "Upload Data" : "Get Started"}
                 onClick={path === "/demo" ? openModal : null}
               />
             </Link>

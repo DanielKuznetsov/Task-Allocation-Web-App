@@ -3,17 +3,69 @@ import { MantineButton } from "../Button/MantineButton";
 import { useDisclosure } from "@mantine/hooks";
 import { SolverModal } from "../SolverModal/SolverModal.jsx";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
+import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 
 export const Intro = () => {
   const [isModalOpen, { open: openModal, close: closeModal }] =
     useDisclosure(false);
 
+  const titleRef = useRef(null);
+  const [passedTitle, setPassedTitle] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          setPassedTitle(true);
+          // Perform any action here
+        } else {
+          setPassedTitle(false);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (titleRef.current) {
+      observer.observe(titleRef.current);
+    }
+
+    return () => {
+      if (titleRef.current) {
+        observer.unobserve(titleRef.current);
+      }
+    };
+  }, [titleRef]);
+
+  const [showOverlay, setShowOverlay] = useState(true);
+
+  useEffect(() => {
+    let timeoutId;
+
+    if (passedTitle) {
+      setShowOverlay(true);
+      timeoutId = setTimeout(() => {
+        setShowOverlay(false);
+      }, 300);
+    }
+
+    if (!passedTitle) {
+      setShowOverlay(false);
+      timeoutId = setTimeout(() => {
+        setShowOverlay(true);
+      }, 300);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [passedTitle]);
+
   return (
     <>
       <div className={classes.intro}>
         <div className={classes.info}>
+          <span ref={titleRef} className={classes.emptySpan}></span>
           <h1 className={classes.title}>
-            Towards efficient and scalable
+            <span>Towards efficient and scalable</span>
             <span className={classes.titleTA}> multi-agent systems.</span>
           </h1>
 
@@ -30,12 +82,13 @@ export const Intro = () => {
 
         <div className={classes.buttons}>
           {/* This should scroll down the page to the demo screen and open the demo screen modal */}
-          <MantineButton
-            variant="intro"
-            context="Watch Interactive Demo"
-            onClick={openModal}
-            icon={<ArrowRightIcon width="20" height="20" />}
-          />
+          <Link href="/demo">
+            <MantineButton
+              variant="intro"
+              context="Try Interactive Demo"
+              icon={<ArrowRightIcon width="20" height="20" />}
+            />
+          </Link>
         </div>
 
         <div className={classes.contributors}>
@@ -49,9 +102,59 @@ export const Intro = () => {
             <h5 className={classes.contributor}>S. Shankar Sastry</h5>
           </div>
         </div>
-      </div>
 
-      <SolverModal opened={isModalOpen} close={closeModal} />
+        <div className={classes.demoWrapper}>
+          {showOverlay && (
+            <div
+              className={classes.demoOverlay}
+              style={{
+                opacity: passedTitle ? 0 : 1,
+              }}
+            ></div>
+          )}
+
+          <div
+            className={classes.demo}
+            style={{
+              transform: passedTitle ? "scale(1)" : "scale(1.5)",
+            }}
+          >
+            <div
+              className={classes.demoImg}
+              style={{
+                borderRadius: passedTitle ? "20px" : "0px",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  paddingBottom: "calc(65.5199374511337% + 41px)",
+                  height: 0,
+                }}
+              >
+                <iframe
+                  src="https://demo.arcade.software/oIrg1qoT4Yk0clINQmXF?embed"
+                  title="localhost:3000"
+                  frameBorder="0"
+                  loading="lazy"
+                  webkitallowfullscreen
+                  mozallowfullscreen
+                  allowfullscreen
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translate(-50%, 0)",
+                    width: "100%",
+                    height: "100%",
+                    colorScheme: "light",
+                  }}
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
