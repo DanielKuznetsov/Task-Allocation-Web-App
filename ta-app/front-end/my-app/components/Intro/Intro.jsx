@@ -11,9 +11,9 @@ export const Intro = () => {
   const titleRef = useRef(null);
 
   const variants = {
-    initial: { opacity: 0, y: 30 }, 
+    initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -30 }, 
+    exit: { opacity: 0, y: -30 },
   };
 
   useLayoutEffect(() => {
@@ -75,11 +75,14 @@ export const Intro = () => {
               <span className={classes.titleTA}> multi-agent systems.</span>
             </motion.h1>
 
-            <motion.h2 initial="initial"
-            animate="animate"
-            exit="exit" 
-            variants={variants}
-            transition={{ duration: 0.5, delay: 0.2 }}  className={classes.subtitle}>
+            <motion.h2
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={variants}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className={classes.subtitle}
+            >
               <span className={classes.subtitleTA}>
                 A SAT-based approach for task allocation in warehouse settings.
               </span>
@@ -130,6 +133,9 @@ export const Intro = () => {
           className={classes.demoWrapper}
           style={{
             overflow: showOverlay ? "hidden" : "visible",
+            animation: showOverlay
+              ? "none"
+              : "shadowAnimation 3s infinite alternate",
           }}
         >
           {showOverlay && (
@@ -156,8 +162,7 @@ export const Intro = () => {
               <div
                 style={{
                   position: "relative",
-                  paddingBottom: "calc(65.5199374511337% + 41px)",
-                  height: 0,
+                  height: "116.5%",
                 }}
               >
                 <iframe
@@ -168,7 +173,9 @@ export const Intro = () => {
                   webkitallowfullscreen="true"
                   mozallowfullscreen="true"
                   allowFullScreen
+                  // className={classes.iframe}
                   style={{
+                    borderRadius: "20px",
                     position: "absolute",
                     top: 0,
                     left: "50%",
