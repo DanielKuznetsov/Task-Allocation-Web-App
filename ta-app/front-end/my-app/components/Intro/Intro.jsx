@@ -130,6 +130,7 @@ export const Intro = () => {
         </motion.div>
 
         <div
+        id="demo"
           className={classes.demoWrapper}
           style={{
             overflow: showOverlay ? "hidden" : "visible",

@@ -27,9 +27,9 @@
   font-weight: 500;
 }
 
-.labelIntro {
+.labelIntro,
+.labelBig {
   font-size: 1.1rem;
-  font-weight: 500;
 }
 
 /* OUTLINED */
@@ -39,7 +39,7 @@
   height: 40px;
   font-size: 15px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(250, 250, 250, 0.8);
   border-color: rgba(0, 0, 0, 0.06);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.04);
   border-width: 1px;
@@ -49,7 +49,7 @@
 }
 
 .rootOutlined:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(250, 250, 250, 1);
 }
 
 /* INTRO */

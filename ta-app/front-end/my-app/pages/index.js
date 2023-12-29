@@ -4,6 +4,7 @@ import { Abstract } from "../components/Abstract/Abstract.jsx";
 import { Motivation } from "../components/Motivation/Motivation.jsx";
 import { Approach } from "../components/Approach/Approach.jsx";
 import PageTransition from "../components/PageTransition/PageTransition.jsx";
+import { Footer } from "../components/Footer/Footer.jsx";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Abstract />
       <Motivation />
       <Approach />
+      <Footer />
     </PageTransition>
   );
 }
