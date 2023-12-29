@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   padding-top: 5rem;
-  padding-bottom: 7.25rem;
+  /* padding-bottom: 4rem; */
 }
 
 .footerContent {
@@ -52,4 +52,13 @@
   display: flex;
   justify-content: center;
   gap: 1.25rem;
+}
+
+.copyright {
+  color: rgba(250, 250, 250, 0.6);
+  font-size: .8rem;
+  margin-top: 5rem;
+  text-align: right;
+  width: 71.25rem;
+  padding-bottom: 2rem;
 }

@@ -45,9 +45,9 @@ export const Motivation = () => {
 
         <div className={classes.card}>
           <RocketIcon width="24px" height="24px" color="#ec4899" />
-          <h3 className={classes.cardHeading}>Task Allocation Execution</h3>
+          <h3 className={classes.cardHeading}>Animation Framework</h3>
           <p className={classes.cardText}>
-            Performing Task Allocation (TA) within established constraints.
+            Develop an animation for enhanced visualization of task allocation.
           </p>
         </div>
 

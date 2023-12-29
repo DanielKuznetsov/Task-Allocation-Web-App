@@ -103,6 +103,7 @@ export const Intro = () => {
         >
           <Link href="/demo">
             <MantineButton
+              big
               variant="intro"
               context="Try Interactive Demo"
               icon={<ArrowRightIcon width="20" height="20" />}
@@ -130,7 +131,7 @@ export const Intro = () => {
         </motion.div>
 
         <div
-        id="demo"
+          id="demo"
           className={classes.demoWrapper}
           style={{
             overflow: showOverlay ? "hidden" : "visible",
